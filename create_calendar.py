@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from icalendar import Calendar, Event,Alarm
 import pytz
 import uuid
+import os
 
 
 def create_calendar(dicionario):
@@ -28,7 +29,10 @@ def create_calendar(dicionario):
 
       criar_evento(cal,key,comeco, fim)
   #--------------------------
-  filepath = f'calendars/{uuid.uuid4().hex}.ics'
+  
+  basedir = os.path.abspath(os.path.dirname(__file__))
+  
+  filepath = os.path.join(basedir,f'calendars/{uuid.uuid4().hex}.ics')
   with open(f'{filepath}', 'wb') as fw:
     fw.write(cal.to_ical())
   return filepath

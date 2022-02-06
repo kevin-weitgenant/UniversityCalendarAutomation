@@ -1,28 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
+<br />
+<br />
+<br />
 
-{% block content %}
-
-<br>
-<br>
-<br>
-
-<div class = "container" align="left" >
+<div class="container" align="left">
   <form method="POST">
-    {{form.hidden_tag()}}
-    {{form.body(cols="100", rows="20")}}
-    <br>
-    <br>
+    {{form.hidden_tag()}} {{form.body(cols="100", rows="20")}}
+    <br />
+    <br />
     {{form.submit()}}
   </form>
 </div>
 
-
-
-
-
-
-
 {% endblock %}
-
-
