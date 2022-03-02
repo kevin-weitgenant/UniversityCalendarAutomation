@@ -11,7 +11,7 @@ from Google import Create_Service, convert_to_RFC_datetime
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
 from create_calendar import ajustar
-from service import info
+#from service import info
 import os
 
 def init_service():
