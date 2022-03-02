@@ -17,8 +17,8 @@ import ast
 
 def init_service():
   SCOPES = ['https://www.googleapis.com/auth/calendar']
-  #SERVICE_ACCOUNT_FILE = 'service.json'
-
+  
+  # string of dictionary was passed as environment variable, this next line converts this string to a dictionary 
   info = ast.literal_eval(os.environ["info"])
   credentials = service_account.Credentials.from_service_account_info(
           info, scopes=SCOPES)

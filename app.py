@@ -3,10 +3,10 @@ from create_calendar import create_calendar,criar_dicionario
 from forms import Horarios, Calendario
 from flask import send_file
 from Create_embeddedGoogleCalendar import generate_calendar,init_service
-
+import os
 
 app=Flask(__name__)
-app.config[ 'SECRET_KEY'] = 'key'
+app.config[ 'SECRET_KEY'] = os.environ["KEY"]
 
 
 
