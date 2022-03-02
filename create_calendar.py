@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 from icalendar import Calendar, Event,Alarm
 import pytz
 import uuid
-
+import os
 
 def create_calendar(dicionario):
   conversao = {'SEGUNDA-FEIRA': 0, 'TERÇA-FEIRA':1, 'QUARTA-FEIRA':2,'QUINTA-FEIRA':3,'SEXTA-FEIRA':4,'SÁBADO':5,'DOMINGO':6, 'SABADO' : 5}
