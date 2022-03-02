@@ -6,7 +6,7 @@ from Create_embeddedGoogleCalendar import generate_calendar,init_service
 import os
 
 app=Flask(__name__)
-app.config[ 'SECRET_KEY'] = os.environ["KEY"]
+app.config[ 'SECRET_KEY'] = os.environ["key"]
 
 
 
