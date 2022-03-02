@@ -11,14 +11,16 @@ from Google import Create_Service, convert_to_RFC_datetime
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
 from create_calendar import ajustar
-
+from service import info
+import os
 
 def init_service():
   SCOPES = ['https://www.googleapis.com/auth/calendar']
-  SERVICE_ACCOUNT_FILE = 'service.json'
+  #SERVICE_ACCOUNT_FILE = 'service.json'
 
-  credentials = service_account.Credentials.from_service_account_file(
-          SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+  info = os.environ.get('info')
+  credentials = service_account.Credentials.from_service_account_info(
+          info, scopes=SCOPES)
 
 
   service = build('calendar', 'v3', credentials=credentials)

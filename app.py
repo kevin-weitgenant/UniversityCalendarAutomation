@@ -4,8 +4,11 @@ from forms import Horarios, Calendario
 from flask import send_file
 from Create_embeddedGoogleCalendar import generate_calendar,init_service
 
+
 app=Flask(__name__)
 app.config[ 'SECRET_KEY'] = 'key'
+
+
 
 @app.route('/',methods=['GET','POST'])
 def home():
@@ -18,10 +21,13 @@ def home():
         file_path = create_calendar(dicionario)
         email = form.email.data
         
-        #return send_file(file_path, as_attachment=True)
+        if email == '':
+            return send_file(file_path, as_attachment=True)     
         calendar_id = generate_calendar(dicionario,email)
+        
         if calendar_id is False:
             return send_file(file_path, as_attachment=True)    
+
         else:
             calendar_id = calendar_id.split('@')[0]
             return redirect(url_for('getCalendar', calendar_id = calendar_id, file_path = file_path))

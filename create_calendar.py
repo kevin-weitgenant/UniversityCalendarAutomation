@@ -5,7 +5,6 @@ from datetime import date, datetime, timedelta
 from icalendar import Calendar, Event,Alarm
 import pytz
 import uuid
-import os
 
 
 def create_calendar(dicionario):
