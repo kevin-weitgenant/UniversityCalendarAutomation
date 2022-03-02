@@ -13,12 +13,13 @@ from datetime import date, datetime, timedelta
 from create_calendar import ajustar
 #from service import info
 import os
+import ast
 
 def init_service():
   SCOPES = ['https://www.googleapis.com/auth/calendar']
   #SERVICE_ACCOUNT_FILE = 'service.json'
 
-  info = os.environ.get('info')
+  info = ast.literal_eval(os.environ["info"])
   credentials = service_account.Credentials.from_service_account_info(
           info, scopes=SCOPES)
 
