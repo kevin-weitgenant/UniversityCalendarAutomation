@@ -1,8 +1,7 @@
 import re 
 from collections import defaultdict
 from dateutil.rrule import rrule, WEEKLY, MO
-from datetime import date
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from icalendar import Calendar, Event,Alarm
 import pytz
 import uuid
@@ -31,7 +30,6 @@ def create_calendar(dicionario):
   #--------------------------
   
   basedir = os.path.abspath(os.path.dirname(__file__))
-  
   filepath = os.path.join(basedir,f'calendars/{uuid.uuid4().hex}.ics')
   with open(f'{filepath}', 'wb') as fw:
     fw.write(cal.to_ical())

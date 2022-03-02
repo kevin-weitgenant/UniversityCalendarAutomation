@@ -1,12 +1,14 @@
 {% extends 'base.html' %} {% block content %}
 
 <br />
-<br />
-<br />
-
 <div class="container" align="left">
+  <h2>Cole os dias e os horários das suas disciplinas</h1>
+  <br>
   <form method="POST">
     {{form.hidden_tag()}} {{form.body(cols="100", rows="20")}}
+    <br />
+    <br />
+    {{form.email.label}} {{form.email()}}
     <br />
     <br />
     {{form.submit()}}

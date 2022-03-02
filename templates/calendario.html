@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container" align="left">
+  <iframe
+    src="https://calendar.google.com/calendar/embed?src={{calendar_id}}%40group.calendar.google.com&ctz=America%2FSao_Paulo"
+    style="border: 0"
+    width="800"
+    height="600"
+    frameborder="0"
+    scrolling="no"
+  >
+  </iframe>
+
+  <br>
+  <br>
+
+  <h1> Arquivo .ical</h1>
+  <form method="POST">
+    {{form.hidden_tag()}}
+    {{form.submit()}}
+  </form>
+  {% endblock %}
+</div>
