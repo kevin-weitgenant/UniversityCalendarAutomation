@@ -2,7 +2,7 @@ from flask import Flask,redirect,url_for,render_template,request
 from create_calendar import create_calendar,criar_dicionario
 from forms import Horarios, Calendario
 from flask import send_file
-from create_embeddedGoogleCalendar import generate_calendar,init_service
+from Create_embeddedGoogleCalendar import generate_calendar,init_service
 
 app=Flask(__name__)
 app.config[ 'SECRET_KEY'] = 'key'
