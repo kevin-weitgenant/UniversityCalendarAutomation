@@ -127,6 +127,11 @@ def rename_keys(d, keys):
     return dict([(keys.get(k), v) for k, v in d.items()])
 
 
+def sum_hours(a,b):
+  sum = a+b
+  if sum >23:
+    return sum-24
+  else: return sum 
 
   
 def generate_calendar(dicionario,email):
@@ -147,8 +152,8 @@ def generate_calendar(dicionario,email):
       
       HOUR_ADJUSTMENT = 3
 
-      begin_time = datetime(next_day.year,next_day.month,next_day.day, begin_time.hour + HOUR_ADJUSTMENT, begin_time.minute).isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
-      end_time = datetime(next_day.year,next_day.month,next_day.day, end_time.hour + HOUR_ADJUSTMENT, end_time.minute).isoformat() + 'Z' 
+      begin_time = datetime(next_day.year,next_day.month,next_day.day, sum_hours(begin_time.hour,HOUR_ADJUSTMENT), begin_time.minute).isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
+      end_time = datetime(next_day.year,next_day.month,next_day.day, sum_hours(begin_time.hour,HOUR_ADJUSTMENT), end_time.minute).isoformat() + 'Z' 
 
 
       if insertEvent(service,calendar_id, summary, begin_time, end_time) is False:
