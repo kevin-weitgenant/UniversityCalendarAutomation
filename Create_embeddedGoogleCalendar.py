@@ -11,15 +11,17 @@ from Google import Create_Service, convert_to_RFC_datetime
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
 from create_calendar import ajustar
-#from service import info
+#from service import info          # COMENTAR QUANDO DER DEPLOY
 import os
 import ast
+import pytz
 
 def init_service():
   SCOPES = ['https://www.googleapis.com/auth/calendar']
   
   # string of dictionary was passed as environment variable, this next line converts this string to a dictionary 
-  info = ast.literal_eval(os.environ["info"])
+  
+  info = ast.literal_eval(os.environ["info"])   
   credentials = service_account.Credentials.from_service_account_info(
           info, scopes=SCOPES)
 
@@ -152,13 +154,17 @@ def generate_calendar(dicionario,email):
       
       HOUR_ADJUSTMENT = 3
 
-      begin_time = datetime(next_day.year,next_day.month,next_day.day, sum_hours(begin_time.hour,HOUR_ADJUSTMENT), begin_time.minute).isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
-      end_time = datetime(next_day.year,next_day.month,next_day.day, sum_hours(begin_time.hour,HOUR_ADJUSTMENT), end_time.minute).isoformat() + 'Z' 
-
+      begin_time = datetime(next_day.year,next_day.month,next_day.day, begin_time.hour, begin_time.minute)
+      begin_time = begin_time + timedelta(hours= HOUR_ADJUSTMENT)
+      begin_time = begin_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
+      
+      end_time = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
+      end_time = end_time + timedelta(hours= HOUR_ADJUSTMENT)
+      end_time = end_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
 
       if insertEvent(service,calendar_id, summary, begin_time, end_time) is False:
         return False
-    
+  
   if insertAcl(service,calendar_id,email)is False: return False
   return calendar_id
 

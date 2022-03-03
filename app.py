@@ -6,6 +6,8 @@ from Create_embeddedGoogleCalendar import generate_calendar,init_service
 import os
 
 app=Flask(__name__)
+
+#app.config[ 'SECRET_KEY'] = "algumacoisa"
 app.config[ 'SECRET_KEY'] = os.environ["key"]
 
 
@@ -26,6 +28,7 @@ def home():
         calendar_id = generate_calendar(dicionario,email)
         
         if calendar_id is False:
+            print("API chegou ao limite")
             return send_file(file_path, as_attachment=True)    
 
         else:
