@@ -5,13 +5,13 @@
   <h2>Cole os dias e os horários das suas disciplinas</h1>
   <br>
   <form method="POST">
-    {{form.hidden_tag()}} {{form.body(cols="100", rows="20", style = 'height: 273px')}}
+    {{form.hidden_tag()}} {{form.body(class="form-control", rows = "7")}}
     <br />
     <br />
-    {{form.email.label}} {{form.email()}}
+    {{form.email.label}} {{form.email(class="form-label")}}
     <br />
     <br />
-    {{form.submit()}}
+    {{form.submit(class="btn btn-outline-dark")}}
   </form>
 </div>
 

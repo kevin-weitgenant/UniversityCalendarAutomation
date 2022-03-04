@@ -167,9 +167,3 @@ def generate_calendar(dicionario,email):
   
   if insertAcl(service,calendar_id,email)is False: return False
   return calendar_id
-
-
-
-
-  
-
