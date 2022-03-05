@@ -1,19 +1,19 @@
 {% extends 'base.html' %} {% block content %}
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4"></h1>
-    <p class="lead">Cole os dias e os horários das suas disciplinas</p>
-    <form method="POST">
-      {{form.hidden_tag()}} {{form.body(class="form-control", rows = "7")}}
-      <br />
-      <br />
-      {{form.email.label}} {{form.email(class="form-label")}}
-      <br />
-      <br />
-      {{form.submit(class="btn btn-outline-dark")}}
-    </form>
 
-  </div>
+<br />
+<div class="container" align="left">
+  <h2>Cole os dias e os horários das suas disciplinas</h1>
+  <br>
+  <form method="POST">
+    {{form.hidden_tag()}} {{form.body(class="form-control", rows = "7")}}
+    <br />
+    <br />
+    {{form.email.label}} {{form.email(class="form-label")}}
+    <br />
+    <br />
+    {{form.submit(class="btn btn-outline-dark")}}
+    {{form.submit2(class="btn btn-outline-dark f-r")}}
+  </form>
 </div>
 
 {% endblock %}
