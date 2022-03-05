@@ -10,8 +10,6 @@ app=Flask(__name__)
 #app.config[ 'SECRET_KEY'] = "algumacoisa"
 app.config[ 'SECRET_KEY'] = os.environ["key"]
 
-
-
 @app.route('/',methods=['GET','POST'])
 def home():
     form = Horarios()
@@ -37,9 +35,16 @@ def home():
                 return redirect(url_for('getCalendar', calendar_id = calendar_id))
         
         elif request.form['submit'] == 'Arquivo .ical':
-            dicionario = criar_dicionario(form.body.data)
-            file_path = create_calendar(dicionario)           
-            return send_file(file_path, as_attachment=True)
+            
+
+            if form.body.data != '':
+                dicionario = criar_dicionario(form.body.data)
+                file_path = create_calendar(dicionario)           
+                return send_file(file_path, as_attachment=True)
+            
+            else:
+                flash("Copie no cobalto em ALUNO/CONSULTA/HORÁRIOS", 'missing')
+                return render_template('home.html', form = form)    
 
     elif request.method == 'GET':
         return render_template('home.html', form = form)
