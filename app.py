@@ -17,22 +17,27 @@ def home():
     if request.method == 'POST':
         if request.form['submit'] == 'Calendário GoogleCalendar':
             
-            dicionario = criar_dicionario(form.body.data)
-            email = form.email.data
-            
-            if email == '':
-                flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.", 'alert')
-                return render_template('home.html', form = form)
-            
-            calendar_id = generate_calendar(dicionario,email)
+            if form.body.data != '':
+                dicionario = criar_dicionario(form.body.data)
+                email = form.email.data
+                
+                if email == '':
+                    flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.", 'alert')
+                    return render_template('home.html', form = form)
+                
+                calendar_id = generate_calendar(dicionario,email)
 
-            if calendar_id is False:
-                flash("Provavelmente limite da API, a Google limita o número de calendários criados por dia, tente mais tarde ou use a opção de baixar o arquivo .ical", 'error')
-                return render_template('home.html', form = form) 
+                if calendar_id is False:
+                    flash("Provavelmente limite da API, a Google limita o número de calendários criados por dia, tente mais tarde ou use a opção de baixar o arquivo .ical", 'error')
+                    return render_template('home.html', form = form) 
+
+                else:
+                    calendar_id = calendar_id.split('@')[0]
+                    return redirect(url_for('getCalendar', calendar_id = calendar_id))
 
             else:
-                calendar_id = calendar_id.split('@')[0]
-                return redirect(url_for('getCalendar', calendar_id = calendar_id))
+                flash("Copie no cobalto em ALUNO/CONSULTA/HORÁRIOS", 'missing')
+                return render_template('home.html', form = form) 
         
         elif request.form['submit'] == 'Arquivo .ical':
             
