@@ -22,7 +22,7 @@ def home():
                 email = form.email.data
                 
                 if email == '':
-                    flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.", 'alert')
+                    flash("Caso contrário, não é possível que os eventos sejam atribuídos a sua conta.", 'alert')
                     return render_template('home.html', form = form)
                 
                 calendar_id = generate_calendar(dicionario,email)
