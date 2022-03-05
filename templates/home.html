@@ -2,12 +2,14 @@
 
 <br />
 <div class="container" align="left">
-  <h2>Cole os dias e os horários das suas disciplinas</h1>
+  
+  <img src="/static/copy.gif" height=" 250">
+  <h2>Cole os dias e os horários das suas disciplinas</h2>
   <br>
   <form method="POST">
     {{form.hidden_tag()}} {{form.body(class="form-control", rows = "7")}}
     <br />
-    <br />
+
     {{form.submit(class="btn btn-outline-dark", value = "Arquivo .ical")}}
     
     <br />

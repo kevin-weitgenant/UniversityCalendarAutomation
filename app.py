@@ -20,15 +20,17 @@ def home():
         if request.form['submit'] == 'Calendário GoogleCalendar':
             
             dicionario = criar_dicionario(form.body.data)
-            form.body.data = dicionario
             email = form.email.data
-            calendar_id = generate_calendar(dicionario,email)
-
+            
             if email == '':
                 print("faltou o e-mail")
+                return render_template('home.html', form = form)
             
+            calendar_id = generate_calendar(dicionario,email)
+
             if calendar_id is False:
-                print("API chegou ao limite")  
+                print("API chegou ao limite")
+                return render_template('home.html', form = form)  
 
             else:
                 calendar_id = calendar_id.split('@')[0]
@@ -36,7 +38,6 @@ def home():
         
         elif request.form['submit'] == 'Arquivo .ical':
             dicionario = criar_dicionario(form.body.data)
-            form.body.data = dicionario
             file_path = create_calendar(dicionario)           
             return send_file(file_path, as_attachment=True)
 
