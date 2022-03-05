@@ -15,7 +15,7 @@ def home():
     form = Horarios()
 
     if request.method == 'POST':
-        if request.form['submit'] == 'Calendário GoogleCalendar':
+        if request.form['submit'] == 'Enviar Calendário GoogleCalendar':
             
             if form.body.data != '':
                 dicionario = criar_dicionario(form.body.data)
@@ -39,7 +39,7 @@ def home():
                 flash("Copie no cobalto em ALUNO/CONSULTA/HORÁRIOS", 'missing')
                 return render_template('home.html', form = form) 
         
-        elif request.form['submit'] == 'Arquivo .ical':
+        elif request.form['submit'] == 'Gerar Arquivo .ical':
             
 
             if form.body.data != '':
@@ -61,4 +61,4 @@ def getCalendar():
     return render_template("calendario.html", calendar_id = calendar_id)    
 
 if __name__ == '__main__':
-    app.run(port=5000,debug=False)
+    app.run(port=5000,debug=True)

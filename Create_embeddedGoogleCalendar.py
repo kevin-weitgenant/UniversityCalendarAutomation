@@ -11,7 +11,7 @@ from Google import Create_Service, convert_to_RFC_datetime
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
 from create_calendar import ajustar
-#from service import info          # COMENTAR QUANDO DER DEPLOY
+from service import info          # COMENTAR QUANDO DER DEPLOY
 import os
 import ast
 import pytz
@@ -20,7 +20,7 @@ def init_service():
   SCOPES = ['https://www.googleapis.com/auth/calendar']
   
   # string of dictionary was passed as environment variable, this next line converts this string to a dictionary 
-  info = ast.literal_eval(os.environ["info"])   
+  #info = ast.literal_eval(os.environ["info"])   
   credentials = service_account.Credentials.from_service_account_info(
           info, scopes=SCOPES)
 
@@ -112,6 +112,7 @@ def listEvents(service,id):
       break
 
 def deleteCalendar(service,id):
+  print(f"{id} deletado")
   service.calendars().delete(calendarId= id).execute()
 
 def deleteAllCalendars(service):
@@ -119,7 +120,7 @@ def deleteAllCalendars(service):
     while True:
         calendar_list = service.calendarList().list(pageToken=page_token).execute()
         for calendar_list_entry in calendar_list['items']:
-            deleteCalendar(calendar_list_entry['id'])
+            deleteCalendar(service, calendar_list_entry['id'])
         page_token = calendar_list.get('nextPageToken')
         if not page_token:
             break
@@ -166,3 +167,11 @@ def generate_calendar(dicionario,email):
   
   if insertAcl(service,calendar_id,email)is False: return False
   return calendar_id
+
+
+#delete all calendars
+
+# service = init_service()
+# printCalendarList(service)
+# deleteAllCalendars(service)
+# printCalendarList(service)

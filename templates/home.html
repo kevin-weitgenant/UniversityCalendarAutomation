@@ -53,12 +53,12 @@
     {{form.hidden_tag()}} {{form.body(class="form-control", rows = "7")}}
     <br />
 
-    {{form.submit(class="btn btn-outline-dark", value = "Arquivo .ical")}}
+    {{form.submit(class="btn btn-outline-dark", value = "Gerar Arquivo .ical")}}
     
     <br />
     <br />
-    {{form.email.label}} {{form.email(class="form-label")}}
-    {{form.submit(class="btn btn-outline-dark f-r", value = "Calendário GoogleCalendar")}}
+    {{form.email(class="form-label", placeholder = "E-mail")}}
+    {{form.submit(class="btn btn-outline-dark f-r", value = "Enviar Calendário GoogleCalendar")}}
     
   </form>
 </div>
