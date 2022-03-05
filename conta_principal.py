@@ -1,6 +1,11 @@
+# this approach would need the person to log in in their account
+# it was not used in the calendarv2 project, service accounts were used instead
+
+
+
 from pprint import pprint
 from Google import Create_Service, convert_to_RFC_datetime
-from teste import listEvents, createCalendar,insertAcl,insertEvent,printCalendarList
+from Create_embeddedGoogleCalendar import listEvents, createCalendar,insertAcl,insertEvent,printCalendarList
 
 
 CLIENT_SECRET_FILE = 'principal.json'
@@ -12,5 +17,5 @@ service = Create_Service(CLIENT_SECRET_FILE, API_NAME, API_VERSION, SCOPES)
 
 
 printCalendarList(service)
-id = createCalendar(service, "agora vai meu camarada")
+id = createCalendar(service, "calendarioLFKL")
 insertEvent(service, id)

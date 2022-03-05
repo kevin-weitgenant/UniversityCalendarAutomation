@@ -1,4 +1,4 @@
-from flask import Flask,redirect,url_for,render_template,request
+from flask import Flask,redirect,url_for,render_template,request, flash
 from create_calendar import create_calendar,criar_dicionario
 from forms import Horarios
 from flask import send_file
@@ -23,7 +23,7 @@ def home():
             email = form.email.data
             
             if email == '':
-                print("faltou o e-mail")
+                flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.")
                 return render_template('home.html', form = form)
             
             calendar_id = generate_calendar(dicionario,email)

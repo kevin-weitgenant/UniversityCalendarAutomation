@@ -141,7 +141,7 @@ def generate_calendar(dicionario,email):
   dicionario = rename_keys(dicionario,conversao)
   
   service = init_service()
-  calendar_id = createCalendar(service,"Calendario Gerado")
+  calendar_id = createCalendar(service,"Calendario 2021/2")
   if calendar_id is False:
     return False 
   
