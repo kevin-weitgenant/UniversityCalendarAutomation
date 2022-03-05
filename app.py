@@ -61,4 +61,4 @@ def getCalendar():
     return render_template("calendario.html", calendar_id = calendar_id)    
 
 if __name__ == '__main__':
-    app.run(port=5000,debug=True)
+    app.run(port=5000,debug=False)
