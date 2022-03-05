@@ -7,8 +7,8 @@ import os
 
 app=Flask(__name__)
 
-app.config[ 'SECRET_KEY'] = "algumacoisa"
-#app.config[ 'SECRET_KEY'] = os.environ["key"]
+#app.config[ 'SECRET_KEY'] = "algumacoisa"
+app.config[ 'SECRET_KEY'] = os.environ["key"]
 
 
 
