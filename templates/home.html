@@ -1,14 +1,31 @@
+
+
+
 {% extends 'base.html' %} {% block content %}
-{% for alert in get_flashed_messages() %}
+
+{% with errors = get_flashed_messages(category_filter=["error"]) %}
+{% if errors %}
+
+{% for error in errors %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Algum erro aconteceu! :(</strong> {{error}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+{% for alert in get_flashed_messages(category_filter=["alert"]) %}
 <div class="alert alert-info alert-dismissible fade show" role="alert">
   <strong>É preciso adicionar o e-mail da sua conta do Google Calendar!</strong> {{alert}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
-
-
 
 
 {% endfor %}

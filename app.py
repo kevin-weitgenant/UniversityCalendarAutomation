@@ -23,14 +23,14 @@ def home():
             email = form.email.data
             
             if email == '':
-                flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.")
+                flash("Caso contrário, não é possível para que os eventos sejam atribuídos a sua conta.", 'alert')
                 return render_template('home.html', form = form)
             
             calendar_id = generate_calendar(dicionario,email)
 
             if calendar_id is False:
-                print("API chegou ao limite")
-                return render_template('home.html', form = form)  
+                flash("Provavelmente limite da API, a Google limita o número de calendários criados por dia, tente mais tarde ou use a opção de baixar o arquivo .ical", 'error')
+                return render_template('home.html', form = form) 
 
             else:
                 calendar_id = calendar_id.split('@')[0]
