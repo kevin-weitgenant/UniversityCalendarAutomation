@@ -5,7 +5,7 @@ from wtforms import SubmitField, StringField
 class Horarios(FlaskForm):
     body = TextAreaField()
     submit = SubmitField("Calendário GoogleCalendar")
-    submit2 = SubmitField("Arquivo .ical")
+    submit = SubmitField("Arquivo .ical")
     email = StringField()
 
 

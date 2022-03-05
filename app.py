@@ -2,13 +2,13 @@ from flask import Flask,redirect,url_for,render_template,request
 from create_calendar import create_calendar,criar_dicionario
 from forms import Horarios
 from flask import send_file
-from Create_embeddedGoogleCalendar import generate_calendar,init_service
+from Create_embeddedGoogleCalendar import generate_calendar
 import os
 
 app=Flask(__name__)
 
-#app.config[ 'SECRET_KEY'] = "algumacoisa"
-app.config[ 'SECRET_KEY'] = os.environ["key"]
+app.config[ 'SECRET_KEY'] = "algumacoisa"
+#app.config[ 'SECRET_KEY'] = os.environ["key"]
 
 
 
@@ -22,7 +22,8 @@ def home():
             dicionario = criar_dicionario(form.body.data)
             form.body.data = dicionario
             email = form.email.data
-            
+            calendar_id = generate_calendar(dicionario,email)
+
             if email == '':
                 print("faltou o e-mail")
             
@@ -33,7 +34,7 @@ def home():
                 calendar_id = calendar_id.split('@')[0]
                 return redirect(url_for('getCalendar', calendar_id = calendar_id))
         
-        elif request.form['submit2'] == 'Arquivo .ical':
+        elif request.form['submit'] == 'Arquivo .ical':
             dicionario = criar_dicionario(form.body.data)
             form.body.data = dicionario
             file_path = create_calendar(dicionario)           
