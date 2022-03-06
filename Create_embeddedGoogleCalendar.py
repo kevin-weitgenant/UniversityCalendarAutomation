@@ -127,15 +127,7 @@ def deleteAllCalendars(service):
 
 def rename_keys(d, keys):
     return dict([(keys.get(k), v) for k, v in d.items()])
-
-
-def sum_hours(a,b):
-  sum = a+b
-  if sum >23:
-    return sum-24
-  else: return sum 
-
-  
+ 
 def generate_calendar(dicionario,email):
   conversao = {'SEGUNDA-FEIRA': 0, 'TERÇA-FEIRA':1, 'QUARTA-FEIRA':2,'QUINTA-FEIRA':3,'SEXTA-FEIRA':4,'SÁBADO':5,'DOMINGO':6, 'SABADO' : 5}
   dicionario = rename_keys(dicionario,conversao)

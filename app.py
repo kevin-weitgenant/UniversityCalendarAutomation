@@ -55,10 +55,10 @@ def home():
         return render_template('home.html', form = form)
 
     
-@app.route('/calendario',methods=['GET','POST'] )
+@app.route('/calendario')
 def getCalendar():
     calendar_id = request.args['calendar_id']
     return render_template("calendario.html", calendar_id = calendar_id)    
 
 if __name__ == '__main__':
-    app.run(port=5000,debug=True)
+    app.run(port=5000,debug=False)
