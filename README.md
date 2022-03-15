@@ -6,6 +6,4 @@
 ![Screen Recording 06-03-2022 18 17 (1)](https://user-images.githubusercontent.com/20791940/158383705-777db1e4-106f-4717-91eb-627fe4a9fc31.gif)
 
 
-For next semester I would like to develop APIS that the college website can use and then it would be even easier for students to create their calendars and keep organized because there would be no need to copy their classes schedules and go to my web app, because directly in the college website the calendars would be generated. Hopefully, I can talk with the college website developers and together we can make this work
-
-
+For next semester I would like to develop APIs that the college website can use and then it would be even easier for students to create their calendars and keep organized because there would be no need to copy their classes schedules and go to my web app, because directly in the college website the calendars would be generated.
