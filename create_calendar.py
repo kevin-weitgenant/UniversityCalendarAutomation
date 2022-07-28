@@ -19,13 +19,17 @@ def create_calendar(dicionario):
   for k,v in dicionario.items():
     for key, value in v.items():
       next_day = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=k, count=1)[0]
-      time = datetime.strptime(ajustar(value)[0][0], '%H:%M')
-      end_time = datetime.strptime(ajustar(value)[0][1], '%H:%M')
       
-      comeco = datetime(next_day.year,next_day.month,next_day.day, time.hour, time.minute)
-      fim = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
+      aulas = ajustar(value)
+      
+      for x in range(len(aulas)):
+        time = datetime.strptime(aulas[x][0], '%H:%M')
+        end_time = datetime.strptime(aulas[x][1], '%H:%M')
+      
+        comeco = datetime(next_day.year,next_day.month,next_day.day, time.hour, time.minute)
+        fim = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
 
-      criar_evento(cal,key,comeco, fim)
+        criar_evento(cal,key,comeco, fim)
   #--------------------------
   
   basedir = os.path.abspath(os.path.dirname(__file__))
@@ -113,3 +117,34 @@ def ajustar(lista):
         lista2.append((lista[x][0], fim))
 
   return lista2     
+
+
+
+texto = '''SEGUNDA-FEIRA
+13:30 - 14:20	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+14:20 - 15:10	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+15:10 - 16:00	22000240 - T1 - CONCEPÇÃO DE CIRCUITOS INTEGRADOS	Não informado
+16:00 - 16:50	22000240 - T1 - CONCEPÇÃO DE CIRCUITOS INTEGRADOS	Não informado
+TERÇA-FEIRA
+17:10 - 18:00	22000346 - T1 - TÓPICOS ESPECIAIS EM COMPUTAÇÃO V	Não informado
+18:00 - 18:50	22000346 - T1 - TÓPICOS ESPECIAIS EM COMPUTAÇÃO V	Não informado
+QUARTA-FEIRA
+13:30 - 14:20	22000240 - T1 - CONCEPÇÃO DE CIRCUITOS INTEGRADOS	Não informado
+14:20 - 15:10	22000240 - T1 - CONCEPÇÃO DE CIRCUITOS INTEGRADOS	Não informado
+QUINTA-FEIRA
+13:30 - 14:20	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+14:20 - 15:10	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+15:10 - 16:00	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+16:00 - 16:50	22000178 - T1 - SISTEMAS E SINAIS	Não informado
+SEXTA-FEIRA
+08:00 - 08:50	22000272 - T1 - INTROD PROCESSAMENTO PARALELO E DISTRIBUÍDO 	Não informado
+08:50 - 09:40	22000272 - T1 - INTROD PROCESSAMENTO PARALELO E DISTRIBUÍDO 	Não informado
+10:00 - 10:50	22000272 - T1 - INTROD PROCESSAMENTO PARALELO E DISTRIBUÍDO 	Não informado
+10:50 - 11:40	22000272 - T1 - INTROD PROCESSAMENTO PARALELO E DISTRIBUÍDO 	Não informado'''
+
+
+
+
+dicionario = [['13:30', '14:20'], ['14:20', '15:10'], ['15:10', '16:00'], ['16:00', '16:50']]
+ans = ajustar(dicionario)
+print(ans)
