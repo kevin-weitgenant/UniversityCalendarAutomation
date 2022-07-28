@@ -124,4 +124,3 @@ def ajustar(lista):
 
 
 
-
