@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "calendarioufpel"
+version = "0.1.0"
+description = "web application to help college students from UFPEL to add their classes on a calendar service like google calendar"
+authors = ["kevin weitgenant <kevin.weitgenant@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.103.2"
+uvicorn = "^0.23.2"
+icalendar = "^5.0.10"
+datetime = "^5.2"
+python-dateutil = "^2.8.2"
+pytz = "^2023.3.post1"
+uuid = "^1.30"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
