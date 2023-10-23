@@ -1,6 +1,19 @@
 import re
 from typing import Dict, List
 
+text = """
+ÑÃO FINROMADO
+SEGUNDA-FEIRA
+10:00 - 10:50    22000303 - M1 - PROJETO DE COMPILADORES    [ANG] 343 - Sala de aula
+10:50 - 11:40    22000303 - M1 - PROJETO DE COMPILADORES    [ANG] 343 - Sala de aula
+QUINTA-FEIRA
+10:00 - 10:50    22000303 - M1 - PROJETO DE COMPILADORES    [ANG] 235 - Sala de Aula
+10:50 - 11:40    22000303 - M1 - PROJETO DE COMPILADORES    [ANG] 235 - Sala de Aula
+SEXTA-FEIRA
+17:10 - 18:00    22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II    [ANG] 342 - Sala de aula
+18:00 - 18:50    22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II    [ANG] 342 - Sala de aula"""
+
+
 def merge_events(dictionaryVariable: dict) -> dict:
     merged_dictionary = {}
 
@@ -33,7 +46,7 @@ def merge_events(dictionaryVariable: dict) -> dict:
 
 
 
-def parse_schedule_text(scheduleText: str) -> Dict[str, List[Dict[str, str]]]:
+def parse_schedule_text(scheduleText: str = text) -> Dict[str, List[Dict[str, str]]]:
     schedule = {}
     weekdays = ['SEGUNDA-FEIRA', 'TERCA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SABADO', 'DOMINGO']
     lines = scheduleText.splitlines()
@@ -63,6 +76,8 @@ def parse_schedule_text(scheduleText: str) -> Dict[str, List[Dict[str, str]]]:
                         'subject': subject,
                         'location' :location})
         schedule[key]= lst
-    
 
-    return merge_events(schedule)
+
+
+
+# schedule = parse_schedule(text)
