@@ -5,13 +5,13 @@ import pytz
 import uuid
 import os
 from typing import Dict, List
-from teste import parse_schedule_text
 
-def createEvent(calendar: Calendar, eventName: str, startDatetime: datetime, endDatetime: datetime, timezoneStr='America/Sao_Paulo') -> Calendar:
+
+def createEvent(calendar: Calendar, classDetails: Dict, startDatetime: datetime, endDatetime: datetime, timezoneStr='America/Sao_Paulo') -> Calendar:
     try:
         event = Event()
-        event.add('summary', eventName)
-
+        event.add('summary', classDetails.get('subject'))
+        event.add('location',classDetails.get('location')) 
         timezone = pytz.timezone(timezoneStr)
 
         event.add('dtstart', timezone.localize(startDatetime, is_dst=None))
@@ -57,7 +57,7 @@ def createCalendar(scheduleDict: Dict[str, List[Dict[str, str]]])-> Calendar:
           classStartDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, startTime.hour, startTime.minute)
           classEndDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, endTime.hour, endTime.minute)
 
-          cal = createEvent(cal,classDetails.get('subject'),classStartDatetime, classEndDatetime)
+          cal = createEvent(cal,classDetails,classStartDatetime, classEndDatetime)
 
   return cal
 
@@ -87,6 +87,3 @@ def writeCalendar(calendar: Calendar) -> str:
         return ""
     
 
-schedule = parse_schedule_text()
-
-writeCalendar(createCalendar(schedule))
