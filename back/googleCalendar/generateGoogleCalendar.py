@@ -6,7 +6,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from Google import Create_Service, convert_to_RFC_datetime
+from  .Google import Create_Service, convert_to_RFC_datetime
 
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
@@ -149,37 +149,34 @@ def rename_keys(d, keys):
     return dict([(keys.get(k), v) for k, v in d.items()])
  
 def generate_calendar(dicionario,email):
-  conversao = {'SEGUNDA-FEIRA': 0, 'TERÇA-FEIRA':1, 'QUARTA-FEIRA':2,'QUINTA-FEIRA':3,'SEXTA-FEIRA':4,'SÁBADO':5,'DOMINGO':6, 'SABADO' : 5}
-  dicionario = rename_keys(dicionario,conversao)
+  
   
   service = init_service()
   calendar_id = createCalendar(service,"Calendario gerado")
   if not calendar_id:
     return False 
   
-  for k,v in dicionario.items():
-    for summary, value in v.items():
+  for key,value in dicionario.items():
+    for eventDetails in value:
+      
+      next_day = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=key.value, count=1)[0]   #calculates when will be,for example, the next monday
       
       
-
-      next_day = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=k, count=1)[0]   #calculates when will be,for example, the next monday
+      begin_time = eventDetails['startTime']
+      end_time = eventDetails['endTime']
       
-      for x in range(len(aulas)):
-        begin_time = datetime.strptime(aulas[x][0], '%H:%M')
-        end_time = datetime.strptime(aulas[x][1], '%H:%M')
-        
-        HOUR_ADJUSTMENT = 3
+      HOUR_ADJUSTMENT = 3
 
-        begin_time = datetime(next_day.year,next_day.month,next_day.day, begin_time.hour, begin_time.minute)
-        begin_time = begin_time + timedelta(hours= HOUR_ADJUSTMENT)
-        begin_time = begin_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
-        
-        end_time = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
-        end_time = end_time + timedelta(hours= HOUR_ADJUSTMENT)
-        end_time = end_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
+      begin_time = datetime(next_day.year,next_day.month,next_day.day, begin_time.hour, begin_time.minute)
+      begin_time = begin_time + timedelta(hours= HOUR_ADJUSTMENT)
+      begin_time = begin_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
+      
+      end_time = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
+      end_time = end_time + timedelta(hours= HOUR_ADJUSTMENT)
+      end_time = end_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
 
-        if insertEvent(service,calendar_id, summary, begin_time, end_time) is False:
-          return False
+      if insertEvent(service,calendar_id, eventDetails, begin_time, end_time) is False:
+        return False
   
   if insertAcl(service,calendar_id,email)is False: return False
   return calendar_id
@@ -193,5 +190,6 @@ def generate_calendar(dicionario,email):
 
 service = init_service()
 
-deleteAllCalendars(service)
+# deleteAllCalendars(service)
 # printCalendarList(service)
+

@@ -54,7 +54,7 @@ def merge_events(dictionaryVariable: dict) -> dict:
 
 def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use the function to be more clear the output
     schedule = {}
-    weekdays = ['SEGUNDA-FEIRA', 'TERCA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SABADO', 'DOMINGO']
+    weekdays = ['SEGUNDA-FEIRA', 'TERÇA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SABADO', 'DOMINGO']
     lines = scheduleText.splitlines()
     current_day = None
 
@@ -67,14 +67,15 @@ def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use t
         elif current_day is not None:
             schedule[current_day] += line.strip().split('\n')
 
-
+    
     # the dictionary schedule will be updated in a way that the keys will continue to be the days of the week but
     # values will be a list of dictionaries, every dictionary being a class time entry
     # and this dictionary will have keys: time,subject,location
     for key,value in schedule.items():
         lst = []
         for entry in value:
-            parts = re.split(r'\s{2,}', entry)
+            parts = re.split('\t', entry)
+            print(parts)
             time = parts[0]
             subject = parts[1].split('-')[-1]
             location = parts[2].split('-')[0]
