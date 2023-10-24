@@ -1,5 +1,27 @@
+from enum import Enum
 import re
 from typing import Dict, List
+from pydantic import BaseModel
+from datetime import datetime
+
+class classDetails(BaseModel):
+    startTime: datetime
+    endTime: datetime
+
+    subject: str
+    location: str
+
+class Weekday(Enum):
+    SEGUNDA_FEIRA = 0
+    TERCA_FEIRA = 1
+    QUARTA_FEIRA = 2
+    QUINTA_FEIRA = 3
+    SEXTA_FEIRA = 4
+    SABADO = 5
+    DOMINGO = 6
+
+def rename_keys(dictionary: Dict[str, str]) -> Dict[Weekday, str]:
+    return {Weekday[key.replace("-", "_").upper()]: value for key, value in dictionary.items() if key.replace("-", "_").upper() in Weekday.__members__}
 
 def merge_events(dictionaryVariable: dict) -> dict:
     merged_dictionary = {}
@@ -30,10 +52,7 @@ def merge_events(dictionaryVariable: dict) -> dict:
 
     return merged_dictionary
 
-
-
-
-def parse_schedule_text(scheduleText: str) -> Dict[str, List[Dict[str, str]]]:
+def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use the function to be more clear the output
     schedule = {}
     weekdays = ['SEGUNDA-FEIRA', 'TERCA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SABADO', 'DOMINGO']
     lines = scheduleText.splitlines()
@@ -63,6 +82,24 @@ def parse_schedule_text(scheduleText: str) -> Dict[str, List[Dict[str, str]]]:
                         'subject': subject,
                         'location' :location})
         schedule[key]= lst
-    
-
     return merge_events(schedule)
+
+
+def parse_schedule_text(scheduleText: str) -> Dict[Weekday, List[classDetails]]:
+    
+    preliminary_dict = preliminary_text_to_dict(scheduleText)
+    scheduleDict = rename_keys(preliminary_dict)
+    
+    for day, classes in scheduleDict.items():
+      for index, classDetails in enumerate(classes):
+        startTimeString = classDetails.get('time').split('-')[0].strip()
+        endTimeString = classDetails.get('time').split('-')[-1].strip()
+
+        startTime = datetime.strptime(startTimeString, '%H:%M')
+        endTime = datetime.strptime(endTimeString, '%H:%M')
+        scheduleDict[day][index]['startTime'] = startTime
+        scheduleDict[day][index]['endTime'] = endTime
+        del classDetails['time']
+    
+    return scheduleDict
+    

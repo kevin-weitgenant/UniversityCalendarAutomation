@@ -41,27 +41,17 @@ def createCalendar(scheduleDict: Dict[str, List[Dict[str, str]]])-> Calendar:
   cal.add('prodid', '-//Google Inc//Google Calendar 70.9054//EN')
   cal.add('version', '2.0')
   
-  # Rename keys for easier use with "rrule"
-  dayConversion = {'SEGUNDA-FEIRA': 0, 'TERÇA-FEIRA':1, 'QUARTA-FEIRA':2,'QUINTA-FEIRA':3,'SEXTA-FEIRA':4,'SÁBADO':5,'DOMINGO':6}
-  scheduleDict = rename_keys(scheduleDict, dayConversion)
-
   for day, classes in scheduleDict.items():
       for classDetails in classes:
-          nextDay = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=day, count=1)[0]
-          startTimeString = classDetails.get('time').split('-')[0].strip()
-          endTimeString = classDetails.get('time').split('-')[-1].strip()
+          nextDay = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=day.value, count=1)[0]
+          
 
-          startTime = datetime.strptime(startTimeString, '%H:%M')
-          endTime = datetime.strptime(endTimeString, '%H:%M')
-
-          classStartDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, startTime.hour, startTime.minute)
-          classEndDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, endTime.hour, endTime.minute)
+          classStartDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, classDetails['startTime'].hour, classDetails['startTime'].minute)
+          classEndDatetime = datetime(nextDay.year, nextDay.month, nextDay.day, classDetails['endTime'].hour, classDetails['endTime'].minute)
 
           cal = createEvent(cal,classDetails,classStartDatetime, classEndDatetime)
 
-  return cal
-
-
+  return cal                          
   
 def writeCalendar(calendar: Calendar) -> str:
     # Check if the calendar instance is valid

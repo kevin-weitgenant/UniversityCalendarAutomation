@@ -17,4 +17,7 @@ SEXTA-FEIRA
 18:00 - 18:50    22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II    [ANG] 342 - Sala de aula"""
 
 
-writeCalendar(createCalendar(parse_schedule_text(text)))
+step1 = parse_schedule_text(text)
+writeCalendar(createCalendar(step1))
+
+
