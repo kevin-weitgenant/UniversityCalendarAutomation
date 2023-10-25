@@ -1,6 +1,6 @@
 import re
 from typing import Dict, List
-from googleCalendar.generateGoogleCalendar import generate_calendar
+from googleCalendar.generateGoogleCalendar import generate_Google_calendar
 from parseCalendarText import parse_schedule_text
 from generateIcal import writeCalendar,createCalendar
 

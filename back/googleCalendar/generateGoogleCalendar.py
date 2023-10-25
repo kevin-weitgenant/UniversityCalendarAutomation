@@ -7,7 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from  .Google import Create_Service, convert_to_RFC_datetime
-
+from typing import Dict, Union
 from dateutil.rrule import rrule, WEEKLY, MO
 from datetime import date, datetime, timedelta
 import base64
@@ -145,51 +145,57 @@ def deleteAllCalendars(service):
         if not page_token:
             break
     
-def rename_keys(d, keys):
-    return dict([(keys.get(k), v) for k, v in d.items()])
- 
-def generate_calendar(dicionario,email):
-  
-  
-  service = init_service()
-  calendar_id = createCalendar(service,"Calendario gerado")
-  if not calendar_id:
-    return False 
-  
-  for key,value in dicionario.items():
-    for eventDetails in value:
-      
-      next_day = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=key.value, count=1)[0]   #calculates when will be,for example, the next monday
-      
-      
-      begin_time = eventDetails['startTime']
-      end_time = eventDetails['endTime']
-      
-      HOUR_ADJUSTMENT = 3
+def generate_Google_Calendar(dicionario: Dict, email: str) -> Union[str, bool]:
+    """
+    This function generates a Google Calendar with events and returns the Calendar ID.
+    
+    Parameters:
+    dicionario (Dict): A dictionary containing event details.
+    email (str): An email address to assign the calendar to.
+    
+    Returns:
+    str: The Google Calendar ID if successful.
+    bool: False if an error occurred.
+    """
+    
+    service = init_service()
+    calendar_id = createCalendar(service, "Calendario gerado")
+    
+    # Return False if calendar creation was unsuccessful
+    if not calendar_id:
+        return False 
+    
+    for key, value in dicionario.items():
+        for eventDetails in value:
+            next_day = rrule(freq=WEEKLY, dtstart=date.today(), byweekday=key.value, count=1)[0]   # calculates when will be, for example, the next monday
 
-      begin_time = datetime(next_day.year,next_day.month,next_day.day, begin_time.hour, begin_time.minute)
-      begin_time = begin_time + timedelta(hours= HOUR_ADJUSTMENT)
-      begin_time = begin_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
-      
-      end_time = datetime(next_day.year,next_day.month,next_day.day, end_time.hour, end_time.minute)
-      end_time = end_time + timedelta(hours= HOUR_ADJUSTMENT)
-      end_time = end_time.isoformat() + 'Z'   #google calendar api requires RFC format: isoformat() + 'Z'
+            begin_time = eventDetails['startTime']
+            end_time = eventDetails['endTime']
+            HOUR_ADJUSTMENT = 3
 
-      if insertEvent(service,calendar_id, eventDetails, begin_time, end_time) is False:
+            begin_time = datetime(next_day.year, next_day.month, next_day.day, begin_time.hour, begin_time.minute)
+            begin_time = begin_time + timedelta(hours=HOUR_ADJUSTMENT)
+            begin_time = begin_time.isoformat() + 'Z'   # Google Calendar API requires RFC format: isoformat() + 'Z'
+            
+            end_time = datetime(next_day.year, next_day.month, next_day.day, end_time.hour, end_time.minute)
+            end_time = end_time + timedelta(hours=HOUR_ADJUSTMENT)
+            end_time = end_time.isoformat() + 'Z'   # Google Calendar API requires RFC format: isoformat() + 'Z'
+
+            if insertEvent(service, calendar_id, eventDetails, begin_time, end_time) is False:
+                return False
+  
+    if insertAcl(service, calendar_id, email) is False: 
         return False
-  
-  if insertAcl(service,calendar_id,email)is False: return False
-  return calendar_id
- 
 
+    # Return the Google Calendar ID
+    return calendar_id
 
+if __name__ == "__main__":
 
+  #delete all calendars
 
+  service = init_service()
 
-#delete all calendars
-
-service = init_service()
-
-# deleteAllCalendars(service)
-# printCalendarList(service)
+  # deleteAllCalendars(service)
+  # printCalendarList(service)
 
