@@ -1,6 +1,6 @@
 from enum import Enum
 import re
-from typing import Dict, List
+from typing import Dict, List, Any
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -13,7 +13,7 @@ class classDetails(BaseModel):
 
 class Weekday(Enum):
     SEGUNDA_FEIRA = 0
-    TERCA_FEIRA = 1
+    TERÇA_FEIRA = 1
     QUARTA_FEIRA = 2
     QUINTA_FEIRA = 3
     SEXTA_FEIRA = 4
@@ -52,6 +52,19 @@ def merge_events(dictionaryVariable: dict) -> dict:
 
     return merged_dictionary
 
+
+def remove_duplicates(input_dict: Dict[str, List[Dict[str, Any]]]) -> Dict[str, List[Dict]]:
+    result = {}
+
+    for key, values in input_dict.items():
+        unique_values = []
+        for value in values:
+            if value not in unique_values:
+                unique_values.append(value)
+        result[key] = unique_values
+
+    return result
+
 def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use the function to be more clear the output
     schedule = {}
     weekdays = ['SEGUNDA-FEIRA', 'TERÇA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SABADO', 'DOMINGO']
@@ -75,7 +88,6 @@ def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use t
         lst = []
         for entry in value:
             parts = re.split('\t', entry)
-            print(parts)
             time = parts[0]
             subject = parts[1].split('-')[-1]
             location = parts[2].split('-')[0]
@@ -83,7 +95,10 @@ def preliminary_text_to_dict(scheduleText: str) -> Dict[str, str]:  # just use t
                         'subject': subject,
                         'location' :location})
         schedule[key]= lst
-    return merge_events(schedule)
+
+
+        
+    return merge_events(remove_duplicates(schedule))
 
 
 def parse_schedule_text(scheduleText: str) -> Dict[Weekday, List[classDetails]]:
