@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FileDownload from 'js-file-download';
 
 const apiUrl = 'http://localhost:5000';
 
@@ -9,6 +10,18 @@ export const getIcal = async () => {
   } catch (error) {
     console.error('Error fetching iCal:', error);
     throw error;
+  }
+};
+
+export const handleDownload = async (scheduleText) => {
+  try {
+    const response = await axios.get(`${apiUrl}/api/download_ical`, {
+      params: { scheduleText },
+      responseType: 'blob',  // Important: indicate that we are expecting a stream
+    });
+    FileDownload(response.data, 'calendar.ics');
+  } catch (error) {
+    console.error('An error occurred while downloading the file.', error);
   }
 };
 

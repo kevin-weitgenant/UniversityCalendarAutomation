@@ -2,8 +2,15 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
+
 from parseCalendarText import parse_schedule_text
+from generateIcal import createCalendar, writeCalendar
 from googleCalendar.generateGoogleCalendar import generate_Google_Calendar
+
+import os
+
+
 app = FastAPI()
 
 # Add cors middleware
@@ -24,10 +31,12 @@ app.add_middleware(
 # # Serve React build files
 # app.mount("/", StaticFiles(directory="react-app/build"), name="react-app")
 
-@app.get("/api/getIcal")
-async def get_ical():
-    # Your implementation here
-    return JSONResponse(content={"message": "getIcal called!"})
+@app.get("/api/download_ical")
+def download_ical(scheduleText: str):
+    scheduleDict = parse_schedule_text(scheduleText)
+    
+    filepath = writeCalendar(createCalendar(scheduleDict))
+    return FileResponse(filepath, media_type='text/calendar', filename=os.path.basename(filepath))
 
 @app.get("/getEmbeddedCalendarID")
 async def get_embedded_calendar_id(email: str, scheduleText: str):     

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar'
-import { getEmbeddedCalendarID } from './services/services'
+import { getEmbeddedCalendarID, handleDownload } from './services/services'
 
 
 function App() {
@@ -84,7 +84,7 @@ const [textSchedule, setTextSchedule] = useState(exampleSchedule);
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      <button>Download .ical</button>
+      <button onClick={() => handleDownload(textSchedule)}>Download .ical</button>
       <button onClick={handleGenerateCalendar}>Gerar Embedded Google Calendar</button>
       
       <EmbeddedGoogleCalendar calendarId={calendarId} />
