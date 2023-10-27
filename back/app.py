@@ -9,7 +9,7 @@ from generateIcal import createCalendar, writeCalendar
 from googleCalendar.generateGoogleCalendar import generate_Google_Calendar
 
 import os
-
+from database.counter import Base, engine, increment_count
 
 app = FastAPI()
 
@@ -28,6 +28,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    Base.metadata.create_all(bind=engine)
+
 # # Serve React build files
 # app.mount("/", StaticFiles(directory="react-app/build"), name="react-app")
 
@@ -36,6 +40,7 @@ def download_ical(scheduleText: str):
     scheduleDict = parse_schedule_text(scheduleText)
     
     filepath = writeCalendar(createCalendar(scheduleDict))
+    increment_count()
     return FileResponse(filepath, media_type='text/calendar', filename=os.path.basename(filepath))
 
 @app.get("/getEmbeddedCalendarID")
@@ -54,6 +59,7 @@ async def get_embedded_calendar_id(email: str, scheduleText: str):
         if not calendarID:
             raise HTTPException(status_code=500, detail="Calendar generation failed.")
         
+        increment_count()
         return JSONResponse(content={"calendarID": calendarID})
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during calendar generation: {str(e)}")

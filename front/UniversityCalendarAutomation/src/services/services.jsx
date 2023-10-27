@@ -33,7 +33,7 @@ export const handleDownload = async (scheduleText) => {
 };
 
 
-export const getEmbeddedCalendarID = async (email = 'kcweitgenant@inf.ufpel.edu.br') => {
+export const getEmbeddedCalendarID = async (email = 'kcweitgenant@inf.ufpel.edu.br',scheduleText) => {
     try {
       const response = await axios.get(`${apiUrl}/getEmbeddedCalendarID`, { params: { email,scheduleText} });
       

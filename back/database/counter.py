@@ -1,24 +1,53 @@
-from sqlalchemy import Boolean, Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import Boolean, Column, Integer, String, create_engine, exc
+from sqlalchemy.orm import declarative_base, Session, sessionmaker
+import os
 
-DATABASE_URL = "postgresql://user:password@localhost:5432/mydatabase"
+# Get environment variable for DATABASE_URL or use default
+DATABASE_URL = os.getenv('DATABASE_URL', "postgresql://postgres:123@localhost:5432/postgres")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-class Calendar(Base):
-    __tablename__ = "calendars"
+class Counter(Base):
+    __tablename__ = "calendarCounter"
 
     id = Column(Integer, primary_key=True, index=True)
     count = Column(Integer, default=0)
 
-
 def get_db():
-    db = SessionLocal()
     try:
-        yield db
+        db = SessionLocal()
+        try:
+            yield db
+        except Exception as e:
+            print(f"An error occurred while processing the request: {e}")
+            db.rollback()
+        finally:
+            db.close()
+    except exc.SQLAlchemyError as e:
+        print(f"Could not connect to the database: {e}")
+
+
+def increment_count():
+    try:
+        db = next(get_db())
+        counter = db.query(Counter).first()
+        if counter is None:
+            # if counter does not exist, create it
+            counter = Counter(count=0)
+            db.add(counter)
+            
+        counter.count += 1
+        db.commit()
+        print(f"Incremented count to {counter.count}")
+    except exc.SQLAlchemyError as e:
+        print(f"An error occurred while incrementing count: {e}")
+    except StopIteration:
+        print("Error while getting database connection.")
     finally:
         db.close()
+
+if __name__ == '__main__':
+    print(increment_count())
