@@ -49,5 +49,23 @@ def increment_count():
     finally:
         db.close()
 
+
+def get_count():
+    try:
+        db = next(get_db())
+        counter = db.query(Counter).first()
+        if counter is not None:
+            return counter.count
+        else:
+            return 0
+    except exc.SQLAlchemyError as e:
+        print(f"An error occurred while fetching count: {e}")
+        return None
+    except StopIteration:
+        print("Error while getting database connection.")
+        return None
+    finally:
+        db.close()
+
 if __name__ == '__main__':
     print(increment_count())

@@ -1,3 +1,4 @@
 
 back/serviceWorker.json
 back/.env
+.aider*

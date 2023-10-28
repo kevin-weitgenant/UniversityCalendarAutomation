@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar'
-import { getEmbeddedCalendarID, handleDownload } from './services/services'
+import { getEmbeddedCalendarID, handleDownload,getCount } from './services/services'
 
 
 function App() {
   
   const [email, setEmail] = useState('kcweitgenant@inf.ufpel.edu.br');
   const [calendarId, setCalendarId] = useState('');
-
+  const [calendarCount, setCalendarCount] = useState(null);
   const exampleSchedule = `SEGUNDA-FEIRA
+
 08:00 - 08:50	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 08:50 - 09:40	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 15:10 - 16:00	22000268 - T2 - CÁLCULO NUMÉRICO COMPUTACIONAL	[ANG] 220 - Sala de Aula
@@ -57,6 +58,16 @@ SEXTA-FEIRA
 
 const [textSchedule, setTextSchedule] = useState(exampleSchedule);
 
+
+useEffect(() => {
+  const fetchCount = async () => {
+    const countFromServer = await getCount();
+    setCalendarCount(countFromServer);
+  };
+
+  fetchCount();
+}, []);
+
   const handleGenerateCalendar = async () => {
     try {
       const calendarId = await getEmbeddedCalendarID(email, textSchedule);
@@ -86,6 +97,7 @@ const [textSchedule, setTextSchedule] = useState(exampleSchedule);
 
       <button onClick={() => handleDownload(textSchedule)}>Download .ical</button>
       <button onClick={handleGenerateCalendar}>Gerar Embedded Google Calendar</button>
+      <p>Current count: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
       
       <EmbeddedGoogleCalendar calendarId={calendarId} />
     </div>
