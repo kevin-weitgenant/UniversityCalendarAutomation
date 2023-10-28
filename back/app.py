@@ -44,34 +44,3 @@ def download_ical(scheduleText: str):
     filepath = writeCalendar(createCalendar(scheduleDict))
     increment_count()
     return FileResponse(filepath, media_type='text/calendar', filename=os.path.basename(filepath))
-
-@app.get("/getEmbeddedCalendarID")
-async def get_embedded_calendar_id(email: str, scheduleText: str):     
-
-    if not email or not scheduleText:
-        raise HTTPException(status_code=400, detail="Email and scheduleText must be provided")
-    
-    try:
-        scheduleDict = parse_schedule_text(scheduleText)
-        calendarID = generate_Google_Calendar(scheduleDict, email)
-
-        print(f'scheduleText = {scheduleText}')
-        print(f'calendarID ={calendarID}')
-        
-        if not calendarID:
-            raise HTTPException(status_code=500, detail="Calendar generation failed.")
-        
-        increment_count()
-        return JSONResponse(content={"calendarID": calendarID})
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred during calendar generation: {str(e)}")
-    
-   
-    
-    
-    
-    
-
-
-
-# poetry run uvicorn app:app --port 5000 --reload
