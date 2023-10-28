@@ -29,7 +29,7 @@ app.add_middleware(
 )
 
 # Serve React build files
-app.mount("/", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "dist")), name="calendarFront")
+app.mount("/", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "dist"), html=True), name="calendarFront")
 
 @app.on_event("startup")
 async def startup_event():
@@ -42,3 +42,9 @@ def download_ical(scheduleText: str):
     filepath = writeCalendar(createCalendar(scheduleDict))
     increment_count()
     return FileResponse(filepath, media_type='text/calendar', filename=os.path.basename(filepath))
+
+# Add a catch-all route to serve the index.html file for all other routes
+@app.get("/{path:path}")
+async def serve_index_html(path: str):
+    return FileResponse(os.path.join(os.path.dirname(__file__), "dist", "index.html"))
+
