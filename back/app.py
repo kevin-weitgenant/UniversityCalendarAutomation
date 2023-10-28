@@ -29,13 +29,11 @@ app.add_middleware(
 )
 
 # Serve React build files
-app.mount("/", StaticFiles(directory="dist"), name="calendarFront")
+app.mount("/", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "dist")), name="calendarFront")
 
 @app.on_event("startup")
 async def startup_event():
     Base.metadata.create_all(bind=engine)
-
-
 
 @app.get("/api/download_ical")
 def download_ical(scheduleText: str):
