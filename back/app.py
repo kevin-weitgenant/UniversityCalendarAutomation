@@ -4,12 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from fastapi.responses import FileResponse
 
-from parseCalendarText import parse_schedule_text
-from generateIcal import createCalendar, writeCalendar
-from googleCalendar.generateGoogleCalendar import generate_Google_Calendar
+from .parseCalendarText import parse_schedule_text
+from .generateIcal import createCalendar, writeCalendar
+from .googleCalendar.generateGoogleCalendar import generate_Google_Calendar
 
 import os
-from database.counter import Base, engine, increment_count, get_count
+from .database.counter import Base, engine, increment_count, get_count
 
 app = FastAPI()
 
@@ -17,7 +17,7 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",  # React app
     "http://localhost:5000",  # FastAPI server
-    "http://your-react-app-url.com",  # Substitute this with your React app's URL
+    "https://calendario-ufpel.fly.dev/",  # Substitute this with your React app's URL
     "http://127.0.0.1:5000",
 ]
 app.add_middleware(
@@ -74,7 +74,7 @@ def get_counter():
     else:
         return {"error": "An error occurred while fetching the count."}
     
-app.mount("/", StaticFiles(directory="dist", html=True), name="calendarFront")   
+app.mount("/", StaticFiles(directory="./back/dist", html=True), name="calendarFront")   
     
     
     
@@ -82,4 +82,4 @@ app.mount("/", StaticFiles(directory="dist", html=True), name="calendarFront")
 
 
 
-# poetry run uvicorn app:app --port 5000 --reload
+# poetry run uvicorn back.app:app --port 5000 --reload
