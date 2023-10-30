@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 const EmbeddedGoogleCalendar = ({ calendarId}) => {
@@ -10,8 +9,6 @@ const EmbeddedGoogleCalendar = ({ calendarId}) => {
       style={{ border: 0 }}
       width="800"
       height="600"
-      frameBorder="0"
-      scrolling="no"
     />
   );
 };

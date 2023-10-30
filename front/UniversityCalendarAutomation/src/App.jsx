@@ -1,7 +1,8 @@
 import { useState,useEffect } from 'react'
 import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar'
 import { getEmbeddedCalendarID, handleDownload,getCount } from './services/services'
-
+import styles from './App.module.css';
+import ufpel_logo from './assets/ufpel.png'
 
 function App() {
   
@@ -78,28 +79,48 @@ useEffect(() => {
   };
 
   return (
-    <div>
-      <p>------------------------faça sua mágica</p>
+    <div className = { styles.container }>
+      <header className = { styles.header }>
+        <img src = { ufpel_logo } alt="Logotipo UFPEL"  className = { styles.logo }/>
+        <span className = { styles.headerSpan }>Calendário UFPEL</span>
+      </header>
 
-      <input
-        type="text"
-        placeholder="Coloque o texto neste campo"
-        value={textSchedule}
-        onChange={(e) => setTextSchedule(e.target.value)}
-      />
+      <div className = { styles.textInputsContainer }>
+        <div className = { styles.labelAndInput }>
+          <label htmlFor="calendarInput">Texto do Calendário</label>
+          <input
+            name="calendarInput"
+            type="text"
+            placeholder="Coloque o texto neste campo"
+            value={textSchedule}
+            onChange={(e) => setTextSchedule(e.target.value)}
+            className={styles.calendarInput}
+          />
+        </div>
 
-      <input
-        type="text"
-        placeholder="Coloque o seu e-mail neste campo"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <div className = { styles.labelAndInput }>
+          <label htmlFor="emailInput">Seu E-mail</label>
+          <input
+            name = "emailInput"
+            type="text"
+            placeholder="Coloque o seu e-mail neste campo"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className = { styles.emailInput }
+          />
+        </div>
+      </div>
 
-      <button onClick={() => handleDownload(textSchedule)}>Download .ical</button>
-      <button onClick={handleGenerateCalendar}>Gerar Embedded Google Calendar</button>
-      <p>Current count: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
+      <div className = { styles.buttonContainer }>
+        <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
+        <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Gerar Embedded Google Calendar</button>      
+      </div>
+    
+      <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
       
-      <EmbeddedGoogleCalendar calendarId={calendarId} />
+      <div className = { styles.calendar }>
+        <EmbeddedGoogleCalendar calendarId={calendarId}/>
+      </div>
     </div>
   );
 }

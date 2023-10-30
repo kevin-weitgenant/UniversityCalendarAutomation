@@ -1,0 +1,125 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 100%;
+    font-family: Roboto, sans-serif;
+}
+
+.container{
+    margin: 10px auto;
+    background-color: rgb(132, 132, 175);
+    width: 70%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 10px;
+}
+
+.header{
+    background-color: #ad9ae6;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+.headerSpan{
+    font-size: 30px;
+    font-weight: bold;
+    color: #0040ff;
+}
+
+.logo{
+    height: 80px;
+}
+
+.calendarInput, .emailInput{
+    padding: 10px;
+    border: none;
+    background-color: #f2f2f2; 
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.textInputsContainer{
+    padding: 0px 30px;
+    display: flex;
+    gap: 30px
+}
+
+.calendarInput:focus {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra mais acentuada quando estiver em foco */
+}
+
+.labelAndInput {
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.labelAndInput label{
+    padding-left: 2px;
+}
+
+.buttonContainer{
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+
+.embeddedButton, .downloadButton{
+    width: 90%;
+    padding: 10px;
+    border: none;
+    background-color: #f2f2f2; 
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.embeddedButton:hover, .downloadButton:hover{
+    background-color: #0040ff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    color: #ffffff;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.counting{
+    align-self: center;
+    color: white;
+}
+
+.calendar{
+    align-self: center;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 3px;
+}
+  
+@media (max-width: 1200px) {
+    .container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    .container {
+        width: 100%;
+    }
+}
