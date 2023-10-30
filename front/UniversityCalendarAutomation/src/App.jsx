@@ -3,12 +3,14 @@ import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar'
 import { getEmbeddedCalendarID, handleDownload,getCount } from './services/services'
 import styles from './App.module.css';
 import ufpel_logo from './assets/ufpel.png'
+import github_logo from './assets/github.png'
 
 function App() {
   
   const [email, setEmail] = useState('kcweitgenant@inf.ufpel.edu.br');
   const [calendarId, setCalendarId] = useState('');
   const [calendarCount, setCalendarCount] = useState(null);
+
   const exampleSchedule = `SEGUNDA-FEIRA
 
 08:00 - 08:50	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
@@ -46,7 +48,7 @@ SEXTA-FEIRA
 17:10 - 18:00	22000305 - M1 - TRABALHO DE CONCLUSÃO DE CURSO I	[ANG] 235 - Sala de Aula
 18:00 - 18:50	22000305 - M1 - TRABALHO DE CONCLUSÃO DE CURSO I	[ANG] 235 - Sala de Aula`
 
-const scheduleEU = `
+/*const scheduleEU = `
 SEGUNDA-FEIRA
 10:00 - 10:50	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 343 - Sala de aula
 10:50 - 11:40	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 343 - Sala de aula
@@ -56,6 +58,7 @@ QUINTA-FEIRA
 SEXTA-FEIRA
 17:10 - 18:00	22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II	[ANG] 342 - Sala de aula
 18:00 - 18:50	22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II	[ANG] 342 - Sala de aula`
+*/
 
 const [textSchedule, setTextSchedule] = useState(exampleSchedule);
 
@@ -113,7 +116,7 @@ useEffect(() => {
 
       <div className = { styles.buttonContainer }>
         <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
-        <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Gerar Embedded Google Calendar</button>      
+        <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Enviar Google Calendar para o E-mail</button>      
       </div>
     
       <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
@@ -121,6 +124,13 @@ useEffect(() => {
       <div className = { styles.calendar }>
         <EmbeddedGoogleCalendar calendarId={calendarId}/>
       </div>
+
+      <footer>
+        <span>Desenvolvido por Kevin Weitgenant e Gabriel Ramires</span>
+        <a href="https://github.com/kevin-weitgenant/UniversityCalendarAutomation" target='__blank'>
+          <img className = { styles.logoGit } src = { github_logo } alt="Logo da Github" />
+        </a>
+      </footer>
     </div>
   );
 }

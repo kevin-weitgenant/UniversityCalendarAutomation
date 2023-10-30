@@ -30,7 +30,7 @@ body, html{
 .headerSpan{
     font-size: 30px;
     font-weight: bold;
-    color: #0040ff;
+    color: white;
 }
 
 .logo{
@@ -110,6 +110,21 @@ body, html{
     border-radius: 20px;
     overflow: hidden;
     padding: 3px;
+    background-color: white;
+}
+
+footer{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.logoGit{
+    height: 40px;
+    cursor: pointer;
 }
   
 @media (max-width: 1200px) {

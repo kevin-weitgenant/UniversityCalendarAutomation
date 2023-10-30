@@ -7,7 +7,7 @@ const EmbeddedGoogleCalendar = ({ calendarId}) => {
     <iframe
       src={calendarUrl}
       style={{ border: 0 }}
-      width="800"
+      width="750"
       height="600"
     />
   );
