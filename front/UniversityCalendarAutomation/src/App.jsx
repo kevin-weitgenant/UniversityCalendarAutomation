@@ -11,8 +11,8 @@ function App() {
   const [calendarId, setCalendarId] = useState('');
   const [calendarCount, setCalendarCount] = useState(null);
 
-  const exampleSchedule = `SEGUNDA-FEIRA
-
+  const exampleSchedule = `
+SEGUNDA-FEIRA
 08:00 - 08:50	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 08:50 - 09:40	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 15:10 - 16:00	22000268 - T2 - CÁLCULO NUMÉRICO COMPUTACIONAL	[ANG] 220 - Sala de Aula

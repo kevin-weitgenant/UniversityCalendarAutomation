@@ -3,11 +3,16 @@ import FileDownload from 'js-file-download';
 
 let apiUrl
 
-if (process.env.NODE_ENV === 'production') {
-  apiUrl = process.env.REACT_APP_PROD_API_URL || 'http://localhost:5000';
-} else {
-  // Use the localhost URL for local development
-  apiUrl = 'http://localhost:5000';
+
+// apiUrl = import.meta.env.VITE_PROD|| 'http://localhost:5000';
+
+  
+if (!import.meta.env.PROD){
+  apiUrl ='http://localhost:5000';
+}
+else{
+  console.log("em produção!!!!");
+  apiUrl ='';
 }
 
 export const handleDownload = async (scheduleText) => {

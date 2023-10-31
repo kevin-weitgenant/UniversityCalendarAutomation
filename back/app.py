@@ -63,7 +63,7 @@ async def get_embedded_calendar_id(email: str, scheduleText: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during calendar generation: {str(e)}")
     
-# Serve React build files
+
 
 
 @app.get("/api/get_count")
@@ -73,7 +73,8 @@ def get_counter():
         return {"count": count}
     else:
         return {"error": "An error occurred while fetching the count."}
-    
+
+
 app.mount("/", StaticFiles(directory="./back/dist", html=True), name="calendarFront")   
     
     
