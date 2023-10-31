@@ -119,38 +119,41 @@ useEffect(() => {
         >
           <img onClick={closeModal} src = { tutorial_gif } alt="GIF de explicação" />
         </Modal>
-
-        <div className = { styles.textInputsContainer }>
-          <div className = { styles.labelAndInput }>
+        
+        <div>
+          <div className = { styles.textInputsContainer }>
+          <div className={styles.labelAndInput}>
             <label htmlFor="calendarInput">Texto do Calendário</label>
-            <input
-              name="calendarInput"
-              type="text"
-              placeholder="Coloque o texto neste campo"
-              value={textSchedule}
-              onChange={(e) => setTextSchedule(e.target.value)}
-              className={styles.calendarInput}
-            />
+            <div className = { styles.outerCalendarInput }>
+              <textarea
+                name="calendarInput"
+                placeholder="Coloque o texto neste campo"
+                value={textSchedule}
+                onChange={(e) => setTextSchedule(e.target.value)}
+                className={ styles.calendarInput }
+              />              
+            </div>
+
+          </div>
           </div>
 
-          <div className = { styles.labelAndInput }>
-            <label htmlFor="emailInput">Seu E-mail</label>
-            <input
-              name = "emailInput"
-              type="text"
-              placeholder="Coloque o seu e-mail neste campo"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className = { styles.emailInput }
-            />
+          <div className = { styles.buttonContainer }>
+            <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
+            <div className = { styles.labelAndInput }>
+              <label htmlFor="emailInput">Seu E-mail</label>
+              <input
+                name = "emailInput"
+                type="text"
+                placeholder="Coloque o seu e-mail neste campo"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className = { styles.emailInput }
+              />
+            </div>
+            <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Enviar Google Calendar para o E-mail</button>      
           </div>
         </div>
 
-        <div className = { styles.buttonContainer }>
-          <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
-          <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Enviar Google Calendar para o E-mail</button>      
-        </div>
-      
         <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
         
         <div className = { styles.calendar }>

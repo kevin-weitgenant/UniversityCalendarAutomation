@@ -51,9 +51,9 @@ body, html{
     padding: 10px 0px;
     text-indent: 10px;
     border: none;
-    background-color: #f2f2f2; 
-    border-radius: 5px;
+    background-color: #f2f2f2;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px;
     font-size: 16px;
     color: #333;
     outline: none;
@@ -61,7 +61,20 @@ body, html{
     cursor: pointer;
 }
 
+.outerCalendarInput{
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.calendarInput{
+    align-self: center;
+    width: 100%;
+    height: 200px;
+    resize: none;
+}
+
 .textInputsContainer{
+    margin-top: 15px;
     padding: 0px 30px;
     display: flex;
     gap: 30px
@@ -85,12 +98,15 @@ body, html{
 
 .buttonContainer{
     display: flex;
+    align-items: end;
     padding: 30px;
     gap: 30px;
 }
 
 .embeddedButton, .downloadButton{
     width: 100%;
+    min-width: fit-content;
+    height: 38.4px;
     padding: 10px;
     border: none;
     background-color: #f2f2f2; 
@@ -101,6 +117,7 @@ body, html{
     outline: none;
     transition: all 0.3s;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .embeddedButton:hover, .downloadButton:hover{
@@ -109,6 +126,11 @@ body, html{
     color: #ffffff;
     transition: all 0.2s;
     cursor: pointer;
+}
+
+.emailInput{
+    width: 100%;
+    min-width: max-content;
 }
 
 .counting{
@@ -173,5 +195,8 @@ footer{
 @media (max-width: 800px) {
     .container {
         width: 100%;
+    }
+    .buttonContainer{
+        flex-direction: column;
     }
 }
