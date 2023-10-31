@@ -6,6 +6,13 @@ body, html{
     font-family: Roboto, sans-serif;
 }
 
+.outerContainer{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .container{
     margin: 10px auto;
     background-color: rgb(132, 132, 175);
@@ -15,6 +22,7 @@ body, html{
     flex-direction: column;
     overflow: hidden;
     gap: 10px;
+    box-shadow: 0 2px 4px rgba(0.4, 1, 1, 0.5); 
 }
 
 .header{
@@ -24,13 +32,15 @@ body, html{
     flex-direction: row;
     align-items: center;
     gap: 20px;
-    padding-left: 20px;
+    padding: 0px 20px 0px 20px;
+    justify-content: space-between;
 }
 
 .headerSpan{
     font-size: 30px;
     font-weight: bold;
     color: white;
+    text-align: center;
 }
 
 .logo{
@@ -38,7 +48,8 @@ body, html{
 }
 
 .calendarInput, .emailInput{
-    padding: 10px;
+    padding: 10px 0px;
+    text-indent: 10px;
     border: none;
     background-color: #f2f2f2; 
     border-radius: 5px;
@@ -79,7 +90,7 @@ body, html{
 }
 
 .embeddedButton, .downloadButton{
-    width: 90%;
+    width: 100%;
     padding: 10px;
     border: none;
     background-color: #f2f2f2; 
@@ -106,11 +117,14 @@ body, html{
 }
 
 .calendar{
+    width: 90%;
+    height: 400px;
     align-self: center;
     border-radius: 20px;
     overflow: hidden;
     padding: 3px;
     background-color: white;
+    margin-bottom: 20px;
 }
 
 footer{
@@ -118,12 +132,35 @@ footer{
     justify-content: center;
     display: flex;
     gap: 20px;
-    color: white;
-    margin-bottom: 10px;
+    color: rgb(0, 0, 0);
+    padding: 10px 0px;
+    background-color: #ad9ae6;
 }
 
 .logoGit{
     height: 40px;
+    cursor: pointer;
+}
+
+.howWorks{
+    width: 30%;
+    max-width: 140px;
+    padding: 10px;
+    border: none;
+    background-color: #f2f2f2; 
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.howWorks:hover{
+    background-color: #0040ff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    color: #ffffff;
+    transition: all 0.2s;
     cursor: pointer;
 }
   

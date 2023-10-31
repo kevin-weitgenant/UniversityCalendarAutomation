@@ -4,6 +4,8 @@ import { getEmbeddedCalendarID, handleDownload,getCount } from './services/servi
 import styles from './App.module.css';
 import ufpel_logo from './assets/ufpel.png'
 import github_logo from './assets/github.png'
+import tutorial_gif from './assets/tutorial_gif.gif'
+import Modal from 'react-modal';
 
 function App() {
   
@@ -62,6 +64,16 @@ SEXTA-FEIRA
 
 const [textSchedule, setTextSchedule] = useState(exampleSchedule);
 
+const [isModalOpen, setIsModalOpen] = useState(false);
+
+const openModal = () => {
+  setIsModalOpen(true);
+};
+
+// Função para fechar o modal
+const closeModal = () => {
+  setIsModalOpen(false);
+};
 
 useEffect(() => {
   const fetchCount = async () => {
@@ -82,55 +94,76 @@ useEffect(() => {
   };
 
   return (
-    <div className = { styles.container }>
-      <header className = { styles.header }>
-        <img src = { ufpel_logo } alt="Logotipo UFPEL"  className = { styles.logo }/>
-        <span className = { styles.headerSpan }>Calendário UFPEL</span>
-      </header>
+    <div className= { styles.outerContainer }>
+      <div className = { styles.container }>
+        <header className = { styles.header }>
+          <img src = { ufpel_logo } alt="Logotipo UFPEL"  className = { styles.logo }/>
+          <span className = { styles.headerSpan }>Calendário UFPEL</span>
+          <button onClick={openModal} className = { styles.howWorks }>Como funciona?</button>
+        </header>
 
-      <div className = { styles.textInputsContainer }>
-        <div className = { styles.labelAndInput }>
-          <label htmlFor="calendarInput">Texto do Calendário</label>
-          <input
-            name="calendarInput"
-            type="text"
-            placeholder="Coloque o texto neste campo"
-            value={textSchedule}
-            onChange={(e) => setTextSchedule(e.target.value)}
-            className={styles.calendarInput}
-          />
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          contentLabel="Modal com GIF"
+          style={{
+            content: {
+              width: 'fit-content',
+              height: 'auto',
+              margin: 'auto',
+              display: 'flex',
+              padding: '0',
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <img onClick={closeModal} src = { tutorial_gif } alt="GIF de explicação" />
+        </Modal>
+
+        <div className = { styles.textInputsContainer }>
+          <div className = { styles.labelAndInput }>
+            <label htmlFor="calendarInput">Texto do Calendário</label>
+            <input
+              name="calendarInput"
+              type="text"
+              placeholder="Coloque o texto neste campo"
+              value={textSchedule}
+              onChange={(e) => setTextSchedule(e.target.value)}
+              className={styles.calendarInput}
+            />
+          </div>
+
+          <div className = { styles.labelAndInput }>
+            <label htmlFor="emailInput">Seu E-mail</label>
+            <input
+              name = "emailInput"
+              type="text"
+              placeholder="Coloque o seu e-mail neste campo"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className = { styles.emailInput }
+            />
+          </div>
         </div>
 
-        <div className = { styles.labelAndInput }>
-          <label htmlFor="emailInput">Seu E-mail</label>
-          <input
-            name = "emailInput"
-            type="text"
-            placeholder="Coloque o seu e-mail neste campo"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className = { styles.emailInput }
-          />
+        <div className = { styles.buttonContainer }>
+          <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
+          <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Enviar Google Calendar para o E-mail</button>      
         </div>
-      </div>
-
-      <div className = { styles.buttonContainer }>
-        <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
-        <button className = { styles.embeddedButton }  onClick={handleGenerateCalendar}>Enviar Google Calendar para o E-mail</button>      
-      </div>
-    
-      <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
       
-      <div className = { styles.calendar }>
-        <EmbeddedGoogleCalendar calendarId={calendarId}/>
-      </div>
+        <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
+        
+        <div className = { styles.calendar }>
+          <EmbeddedGoogleCalendar calendarId={calendarId}/>
+        </div>
 
-      <footer>
-        <span>Desenvolvido por Kevin Weitgenant e Gabriel Ramires</span>
-        <a href="https://github.com/kevin-weitgenant/UniversityCalendarAutomation" target='__blank'>
-          <img className = { styles.logoGit } src = { github_logo } alt="Logo da Github" />
-        </a>
-      </footer>
+        <footer>
+          <span>Desenvolvido por Kevin Weitgenant e Gabriel Ramires</span>
+          <a href="https://github.com/kevin-weitgenant/UniversityCalendarAutomation" target='__blank'>
+            <img className = { styles.logoGit } src = { github_logo } alt="Logo da Github" />
+          </a>
+        </footer>
+      </div>
     </div>
   );
 }

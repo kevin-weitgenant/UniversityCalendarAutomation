@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types';
 
-const EmbeddedGoogleCalendar = ({ calendarId}) => {
+const EmbeddedGoogleCalendar = ({ calendarId }) => {
   const calendarUrl = `https://calendar.google.com/calendar/embed?src=${calendarId}`;
 
+  const iframeStyle = {
+    border: 0,
+    width: '100%',
+    height: '100%',
+  };
+
   return (
-    <iframe
-      src={calendarUrl}
-      style={{ border: 0 }}
-      width="750"
-      height="600"
-    />
+    <div style={{ width: '100%', height: '100%' }}>
+      <iframe
+        src={calendarUrl}
+        style={iframeStyle}
+        title="Google Calendar"
+      />
+    </div>
   );
 };
 
