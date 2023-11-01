@@ -5,16 +5,18 @@ import styles from './App.module.css';
 import ufpel_logo from './assets/ufpel.png'
 import github_logo from './assets/github.png'
 import tutorial_gif from './assets/tutorial_gif.gif'
+import gifImage from '/copy.gif';
 import Modal from 'react-modal';
-
+import validator from 'validator';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 function App() {
   
-  const [email, setEmail] = useState('kcweitgenant@inf.ufpel.edu.br');
+  const [email, setEmail] = useState('');
   const [calendarId, setCalendarId] = useState('');
   const [calendarCount, setCalendarCount] = useState(null);
 
-  const exampleSchedule = `
-SEGUNDA-FEIRA
+  const exampleSchedule =`SEGUNDA-FEIRA
 08:00 - 08:50	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 08:50 - 09:40	22000174 - T1 - ENGENHARIA DE SOFTWARE II	[ANG] 235 - Sala de Aula
 15:10 - 16:00	22000268 - T2 - CÁLCULO NUMÉRICO COMPUTACIONAL	[ANG] 220 - Sala de Aula
@@ -50,19 +52,9 @@ SEXTA-FEIRA
 17:10 - 18:00	22000305 - M1 - TRABALHO DE CONCLUSÃO DE CURSO I	[ANG] 235 - Sala de Aula
 18:00 - 18:50	22000305 - M1 - TRABALHO DE CONCLUSÃO DE CURSO I	[ANG] 235 - Sala de Aula`
 
-/*const scheduleEU = `
-SEGUNDA-FEIRA
-10:00 - 10:50	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 343 - Sala de aula
-10:50 - 11:40	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 343 - Sala de aula
-QUINTA-FEIRA
-10:00 - 10:50	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 235 - Sala de Aula
-10:50 - 11:40	22000303 - M1 - PROJETO DE COMPILADORES	[ANG] 235 - Sala de Aula
-SEXTA-FEIRA
-17:10 - 18:00	22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II	[ANG] 342 - Sala de aula
-18:00 - 18:50	22000306 - M1 - TRABALHO DE CONCLUSÃO DE CURSO II	[ANG] 342 - Sala de aula`
-*/
 
-const [textSchedule, setTextSchedule] = useState(exampleSchedule);
+
+const [textSchedule, setTextSchedule] = useState('');
 
 const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -85,12 +77,22 @@ useEffect(() => {
 }, []);
 
   const handleGenerateCalendar = async () => {
-    try {
-      const calendarId = await getEmbeddedCalendarID(email, textSchedule);
-      setCalendarId(calendarId);
-    } catch (error) {
-      console.error('Error generating embedded Google Calendar:', error);
+    if (!validator.isEmail(email)) {
+      console.log("estou entrando aqui");
+      toast.error('Faltou informar o e-mail!', {
+        position: 'top-right', // Position the message
+        autoClose: 3000, // Close the message after 3 seconds
+      });}
+    else{
+      try {
+        const calendarId = await getEmbeddedCalendarID(email, textSchedule);
+        setCalendarId(calendarId);
+      } catch (error) {
+        console.error('Error generating embedded Google Calendar:', error);
+      }
     }
+    
+    
   };
 
   return (
@@ -101,7 +103,7 @@ useEffect(() => {
           <span className = { styles.headerSpan }>Calendário UFPEL</span>
           <button onClick={openModal} className = { styles.howWorks }>Como funciona?</button>
         </header>
-
+        <img src={gifImage} alt="Your GIF" />
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
@@ -122,12 +124,15 @@ useEffect(() => {
         
         <div>
           <div className = { styles.textInputsContainer }>
+
+
+
           <div className={styles.labelAndInput}>
             <label htmlFor="calendarInput">Texto do Calendário</label>
             <div className = { styles.outerCalendarInput }>
               <textarea
                 name="calendarInput"
-                placeholder="Coloque o texto neste campo"
+                placeholder= {exampleSchedule}
                 value={textSchedule}
                 onChange={(e) => setTextSchedule(e.target.value)}
                 className={ styles.calendarInput }
@@ -144,7 +149,7 @@ useEffect(() => {
               <input
                 name = "emailInput"
                 type="text"
-                placeholder="Coloque o seu e-mail neste campo"
+                placeholder="seunome@gmail.com ou seunome@inf.ufpel.edu.br"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className = { styles.emailInput }
@@ -156,9 +161,9 @@ useEffect(() => {
 
         <p className = { styles.counting }>Contagem de Calendários Gerados: {calendarCount !== null ? calendarCount : 'Loading...'}</p>
         
-        <div className = { styles.calendar }>
+        {/* <div className = { styles.calendar }>
           <EmbeddedGoogleCalendar calendarId={calendarId}/>
-        </div>
+        </div> */}
 
         <footer>
           <span>Desenvolvido por Kevin Weitgenant e Gabriel Ramires</span>
