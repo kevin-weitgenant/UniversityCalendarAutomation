@@ -9,7 +9,7 @@ from .generateIcal import createCalendar, writeCalendar
 from .googleCalendar.generateGoogleCalendar import generate_Google_Calendar
 
 import os
-from .database.counter import Base, engine, increment_count, get_count
+from .database.counter import increment_count, get_count
 
 app = FastAPI()
 
@@ -28,9 +28,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-async def startup_event():
-    Base.metadata.create_all(bind=engine)
 
 
 
