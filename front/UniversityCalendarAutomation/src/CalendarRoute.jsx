@@ -1,4 +1,5 @@
 import styles from './App.module.css';
+import styles2 from './CalendarROute.module.css'
 import ufpel_logo from './assets/ufpel.png'
 import github_logo from './assets/github.png'
 import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar';
@@ -15,15 +16,15 @@ const CalendarRoute = () => {
             <header className = { styles.header }>
               <img src = { ufpel_logo } alt="Logotipo UFPEL"  className = { styles.logo }/>
               <span className = { styles.headerSpan }>Calendário UFPEL</span>
-            
             </header>
     
-            <div className = { styles.gifContainer }>
-                <EmbeddedGoogleCalendar calendarId={calendarId}/>
-              <img src={"/email.png" } alt="Your GIF" />          
+            <div className = { styles2.calendarContainer }>
+              <EmbeddedGoogleCalendar className = { styles2.calendar } calendarId={calendarId}/>
             </div>
-    
-            
+
+            <div className = { styles2.imgContainer }>
+                <img src={"/email.png" } alt="Your GIF" />   
+            </div>
     
             <footer>
               <span>Desenvolvido por Kevin Weitgenant e Gabriel Ramires</span>
