@@ -13,6 +13,7 @@ from datetime import date, datetime, timedelta
 import base64
 import json
 import os
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 import pytz
 
@@ -73,7 +74,7 @@ def createCalendar(service,calendarName):
       return False
     
 
-from tenacity import retry, stop_after_attempt, wait_exponential
+
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def insertEvent(service,id,eventDetails:dict,beginDateTime,endDateTime):
