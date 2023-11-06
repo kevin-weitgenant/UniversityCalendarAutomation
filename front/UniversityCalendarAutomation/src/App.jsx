@@ -76,24 +76,46 @@ useEffect(() => {
   fetchCount();
 }, []);
 
-  const handleGenerateCalendar = async () => {
-    if (!validator.isEmail(email)) {
-      console.log("estou entrando aqui");
-      toast.error('Faltou informar o e-mail!', {
-        position: 'top-right', // Position the message
-        autoClose: 3000, // Close the message after 3 seconds
-      });}
-    else{
-      try {
-        const calendarId = await getEmbeddedCalendarID(email, textSchedule);
-        setCalendarId(calendarId);
-      } catch (error) {
-        console.error('Error generating embedded Google Calendar:', error);
-      }
-    }
-    
-    
-  };
+
+
+const handleIcalDownload = () => {                                                                                                                                       
+  if (textSchedule.trim() === '') {                                                                                                                                      
+    toast.error('Faltou informar o texto do calendário!', {                                                                                                              
+      position: 'top-right', // Position the message                                                                                                                     
+      autoClose: 3000, // Close the message after 3 seconds                                                                                                              
+    });                                                                                                                                                                  
+  } else {                                                                                                                                                               
+    handleDownload(textSchedule);                                                                                                                                                    
+  }                                                                                                                                                                      
+};   
+
+const handleGenerateCalendar = async () => {                                                                                                                             
+  
+  if (textSchedule.trim() === '') {                                                                                                                               
+    toast.error('Faltou informar o texto do calendário!', {                                                                                                              
+      position: 'top-right', // Position the message                                                                                                                     
+      autoClose: 3000, // Close the message after 3 seconds                                                                                                              
+    }); 
+  }
+  else if (!validator.isEmail(email)) {                                                                                                                                       
+    toast.error('Faltou informar o e-mail!', {                                                                                                                           
+      position: 'top-right', // Position the message                                                                                                                     
+      autoClose: 3000, // Close the message after 3 seconds                                                                                                              
+    });                                                                                                                                                                  
+  }                                                                                                                                                             
+  else {                                                                                                                                                               
+    try {                                                                                                                                                                
+      const calendarId = await getEmbeddedCalendarID(email, textSchedule);                                                                                               
+      setCalendarId(calendarId);                                                                                                                                         
+    } catch (error) {                                                                                                                                                    
+      console.error('Error generating embedded Google Calendar:', error);                                                                                                
+    }                                                                                                                                                                    
+  }                                                                                                                                                                      
+};   
+
+
+
+
 
   return (
     <div className= { styles.outerContainer }>
@@ -147,7 +169,7 @@ useEffect(() => {
           </div>
 
           <div className = { styles.buttonContainer }>
-            <button className = { styles.downloadButton } onClick={() => handleDownload(textSchedule)}>Download .ical</button>
+            <button className = { styles.downloadButton } onClick={handleIcalDownload}>Download .ical</button>   
             <div className = { styles.labelAndInput }>
               <label htmlFor="emailInput">Seu E-mail</label>
               <input
