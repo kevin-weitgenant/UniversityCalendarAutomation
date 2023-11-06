@@ -3,3 +3,6 @@ back/serviceWorker.json
 back/.env
 .aider*
 fly.toml
+back/__pycache__/app.cpython-310.pyc
+back/database/__pycache__/counter.cpython-310.pyc
+back/__pycache__/app.cpython-310.pyc
