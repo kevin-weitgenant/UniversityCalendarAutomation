@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import validator from 'validator';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
+import { useNavigate } from 'react-router';
 function App() {
   
   const [email, setEmail] = useState('');
@@ -55,17 +56,17 @@ SEXTA-FEIRA
 
 
 const [textSchedule, setTextSchedule] = useState('');
+const navigate = useNavigate();
+// const [isModalOpen, setIsModalOpen] = useState(false);
 
-const [isModalOpen, setIsModalOpen] = useState(false);
+// const openModal = () => {
+//   setIsModalOpen(true);
+// };
 
-const openModal = () => {
-  setIsModalOpen(true);
-};
-
-// Função para fechar o modal
-const closeModal = () => {
-  setIsModalOpen(false);
-};
+// // Função para fechar o modal
+// const closeModal = () => {
+//   setIsModalOpen(false);
+// };
 
 useEffect(() => {
   const fetchCount = async () => {
@@ -89,33 +90,45 @@ const handleIcalDownload = () => {
   }                                                                                                                                                                      
 };   
 
-const handleGenerateCalendar = async () => {                                                                                                                             
+const handleGenerateCalendar = async () => {
   
-  if (textSchedule.trim() === '') {                                                                                                                               
-    toast.error('Faltou informar o texto do calendário!', {                                                                                                              
-      position: 'top-right', // Position the message                                                                                                                     
-      autoClose: 3000, // Close the message after 3 seconds                                                                                                              
-    }); 
+
+  if (textSchedule.trim() === '') {
+    toast.error('Faltou informar o texto do calendário!', {
+      position: 'top-right',
+      autoClose: 3000,
+    });
+    return;
   }
-  else if (!validator.isEmail(email)) {                                                                                                                                       
-    toast.error('Faltou informar o e-mail!', {                                                                                                                           
-      position: 'top-right', // Position the message                                                                                                                     
-      autoClose: 3000, // Close the message after 3 seconds                                                                                                              
-    });                                                                                                                                                                  
-  }                                                                                                                                                             
-  else {                                                                                                                                                               
-    try {                                                                                                                                                                
-      const calendarId = await getEmbeddedCalendarID(email, textSchedule);                                                                                               
-      setCalendarId(calendarId);                                                                                                                                         
-    } catch (error) {                                                                                                                                                    
-      console.error('Error generating embedded Google Calendar:', error);                                                                                                
-    }                                                                                                                                                                    
-  }                                                                                                                                                                      
-};   
 
+  if (!validator.isEmail(email)) {
+    toast.error('Faltou informar o e-mail!', {
+      position: 'top-right',
+      autoClose: 3000,
+    });
+    return;
+  }
 
-
-
+  try {
+    toast.promise(
+      getEmbeddedCalendarID(email, textSchedule),
+      {
+        pending: 'Gerando o seu calendário...',
+        success: 'Calendário gerado com sucesso',
+        error: 'Erro gerando o seu calendario.',
+      },
+      {
+        position: 'top-right',
+        autoClose: 3000,
+      }
+    ).then(calendarId => {
+      // Use navigate to change the route and pass calendarId as state
+      navigate('/calendar', { state: { calendarId } });
+    });
+  } catch (error) {
+    console.error('Error generating embedded Google Calendar:', error);
+  }
+};
 
   return (
     <div className= { styles.outerContainer }>
@@ -130,7 +143,7 @@ const handleGenerateCalendar = async () => {
           <img src={gifImage} alt="Your GIF" />          
         </div>
 
-        <Modal
+        {/* <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           contentLabel="Modal com GIF"
@@ -146,13 +159,10 @@ const handleGenerateCalendar = async () => {
           }}
         >
           <img onClick={closeModal} src = { tutorial_gif } alt="GIF de explicação" />
-        </Modal>
+        </Modal> */}
         
         <div>
           <div className = { styles.textInputsContainer }>
-
-
-
           <div className={styles.labelAndInput}>
             <label htmlFor="calendarInput">Texto do Calendário</label>
             <div className = { styles.outerCalendarInput }>

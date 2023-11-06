@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
-
-const EmbeddedGoogleCalendar = ({ calendarId }) => {
-  const calendarUrl = `https://calendar.google.com/calendar/embed?src=${calendarId}`;
+const EmbeddedGoogleCalendar = ({ calendarId = ''}) => {
+  const calendarUrl = `https://calendar.google.com/calendar/embed?height=600&wkst=2&bgcolor=%23B39DDB&ctz=America%2FSao_Paulo&mode=WEEK&hl=pt_BR&showCalendars=0&showPrint=0&src=${calendarId}&color=%23AD1457`
 
   const iframeStyle = {
     border: 0,
@@ -20,8 +18,6 @@ const EmbeddedGoogleCalendar = ({ calendarId }) => {
   );
 };
 
-EmbeddedGoogleCalendar.propTypes = {
-  calendarId: PropTypes.string.isRequired,
-};
+
 
 export default EmbeddedGoogleCalendar;
