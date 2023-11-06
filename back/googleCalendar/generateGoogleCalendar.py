@@ -36,6 +36,7 @@ def init_service():
   return service
   
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def printCalendarList(service):
     page_token = None
     while True:
@@ -59,6 +60,7 @@ def countCalendars(service):
     return count
 
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def createCalendar(service,calendarName):
 
     calendar = {
@@ -106,6 +108,7 @@ def insertEvent(service,id,eventDetails:dict,beginDateTime,endDateTime):
     print ('Event created: %s' % (event.get('htmlLink')))
 
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def insertAcl(service,calendarId,email):
     rule = {
     'scope': {
@@ -121,6 +124,7 @@ def insertAcl(service,calendarId,email):
       return False
     
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def listEvents(service,calendarId):
   page_token = None
   while True:
@@ -131,6 +135,7 @@ def listEvents(service,calendarId):
     if not page_token:
       break
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def deleteCalendar(service,calendarId):
   print(f"{calendarId} deleted")
   service.calendars().delete(calendarId= calendarId).execute()
