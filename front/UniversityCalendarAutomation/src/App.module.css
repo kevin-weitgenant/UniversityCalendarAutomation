@@ -33,7 +33,7 @@ body, html{
     align-items: center;
     gap: 20px;
     padding: 0px 20px 0px 20px;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .headerSpan{
@@ -147,6 +147,19 @@ body, html{
     padding: 3px;
     background-color: white;
     margin-bottom: 20px;
+}
+
+.gifContainer{
+    margin-top: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0px 30px;
+}
+
+.gifContainer > img{
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 footer{

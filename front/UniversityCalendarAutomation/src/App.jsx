@@ -101,9 +101,13 @@ useEffect(() => {
         <header className = { styles.header }>
           <img src = { ufpel_logo } alt="Logotipo UFPEL"  className = { styles.logo }/>
           <span className = { styles.headerSpan }>Calendário UFPEL</span>
-          <button onClick={openModal} className = { styles.howWorks }>Como funciona?</button>
+          {/*<button onClick={openModal} className = { styles.howWorks }>Como funciona?</button>*/}
         </header>
-        <img src={gifImage} alt="Your GIF" />
+
+        <div className = { styles.gifContainer }>
+          <img src={gifImage} alt="Your GIF" />          
+        </div>
+
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
