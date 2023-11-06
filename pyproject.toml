@@ -22,6 +22,7 @@ httplib2 = "^0.22.0"
 async-exit-stack = "^1.0.1"
 async-generator = "^1.10"
 redis = "^5.0.1"
+tenacity = "^8.2.3"
 
 
 [build-system]

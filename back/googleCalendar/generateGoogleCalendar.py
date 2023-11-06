@@ -73,6 +73,9 @@ def createCalendar(service,calendarName):
       return False
     
 
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def insertEvent(service,id,eventDetails:dict,beginDateTime,endDateTime):
     event = {
   'summary': eventDetails.get('subject'),
@@ -96,14 +99,10 @@ def insertEvent(service,id,eventDetails:dict,beginDateTime,endDateTime):
       {'method': 'popup', 'minutes': 5},
     ],
   }
-
-
 }
-    try:
-      event = service.events().insert(calendarId= id, body=event).execute()
-      print ('Event created: %s' % (event.get('htmlLink')))
-    except Exception as e:
-      return False
+
+    event = service.events().insert(calendarId= id, body=event).execute()
+    print ('Event created: %s' % (event.get('htmlLink')))
 
 
 def insertAcl(service,calendarId,email):
