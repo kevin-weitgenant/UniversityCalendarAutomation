@@ -9,7 +9,6 @@ const CalendarRoute = () => {
     const location = useLocation();
     const calendarId = location.state?.calendarId;
     
-  
     return (
         <div className= { styles.outerContainer }>
           <div className = { styles.container }>
@@ -23,7 +22,7 @@ const CalendarRoute = () => {
             </div>
 
             <div className = { styles2.imgContainer }>
-                <img src={"/email.png" } alt="Your GIF" />   
+                <img src={"/email.png" } alt="Imagem Demonstração" />   
             </div>
     
             <footer>

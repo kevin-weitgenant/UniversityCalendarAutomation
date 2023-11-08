@@ -1,20 +1,17 @@
 import { useState,useEffect } from 'react'
-import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar'
 import { getEmbeddedCalendarID, handleDownload,getCount } from './services/services'
 import styles from './App.module.css';
 import ufpel_logo from './assets/ufpel.png'
 import github_logo from './assets/github.png'
-import tutorial_gif from './assets/tutorial_gif.gif'
-import gifImage from '/copy.gif';
-import Modal from 'react-modal';
+import gifImage from './assets/tutorial_gif_novo.gif';
 import validator from 'validator';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS
 import { useNavigate } from 'react-router';
+
 function App() {
   
   const [email, setEmail] = useState('');
-  const [calendarId, setCalendarId] = useState('');
   const [calendarCount, setCalendarCount] = useState(null);
 
   const exampleSchedule =`SEGUNDA-FEIRA

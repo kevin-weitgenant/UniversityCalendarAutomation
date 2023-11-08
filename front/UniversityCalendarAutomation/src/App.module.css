@@ -151,15 +151,17 @@ body, html{
 
 .gifContainer{
     margin-top: 20px;
-    border-radius: 20px;
     overflow: hidden;
     padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gifContainer > img{
     max-width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 footer{
