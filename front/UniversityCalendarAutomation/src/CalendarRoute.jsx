@@ -1,5 +1,5 @@
 import styles from './App.module.css';
-import styles2 from './CalendarROute.module.css'
+import styles2 from './CalendarRoute.module.css'
 import ufpel_logo from './assets/ufpel.png'
 import github_logo from './assets/github.png'
 import EmbeddedGoogleCalendar from './EmbeddedGoogleCalendar';

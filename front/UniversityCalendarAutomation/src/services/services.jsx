@@ -11,7 +11,6 @@ if (!import.meta.env.PROD){
   apiUrl ='http://localhost:5000';
 }
 else{
-  console.log("em produção!!!!");
   apiUrl ='';
 }
 
@@ -42,7 +41,6 @@ export const getEmbeddedCalendarID = async (email = 'kcweitgenant@inf.ufpel.edu.
   export const getCount = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/get_count`);
-      console.log("The count is: ", response.data.count);
       return response.data.count;
     } catch (error) {
       console.error('An error occurred while getting the count.', error);
