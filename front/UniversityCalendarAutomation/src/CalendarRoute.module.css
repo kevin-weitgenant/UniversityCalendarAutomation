@@ -3,13 +3,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    margin-bottom: 15px;
 }
 
 .imgContainer img{
     width: 95%;
     border-radius: 15px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 }
 
 .calendarContainer{
