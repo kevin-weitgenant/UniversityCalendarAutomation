@@ -21,7 +21,9 @@ const CalendarRoute = () => {
             <div className = { styles2.calendarContainer }>
               <EmbeddedGoogleCalendar className = { styles2.calendar } calendarId={calendarId}/>
             </div>
-
+            <p style={{color: 'darkslategray', fontSize: '18px', fontStyle: 'italic', textAlign: 'center'}}>
+    Caso não consiga ver sua agenda acima, cheque no seu e-mail:
+</p>
             <div className = { styles2.imgContainer }>
                 <img src={"/email.png" } alt="Your GIF" />   
             </div>
