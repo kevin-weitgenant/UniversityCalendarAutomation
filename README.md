@@ -1,6 +1,6 @@
 # calendariov2
  
- [https://calendario-ufpel.herokuapp.com/](https://calendario-ufpel.fly.dev/)
+[calendario-ufpel.fly.dev](https://calendario-ufpel.fly.dev/)
  
  Simple web app for automatizing the creation of calendars for myself and students of my college(UFPEL), it's possible to generate a ".ical" file or get the calendar directly in Google Calendar. The project was shared in the UFPEL Facebook group and was well received.
  
